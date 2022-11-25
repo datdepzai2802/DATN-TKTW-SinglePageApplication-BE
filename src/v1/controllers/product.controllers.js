@@ -1,63 +1,60 @@
-import Product from "../models/products.model";
+import productModel from "../models/products.model";
+import { productValidate } from "../utils/validator";
+import createError from "http-errors";
 
-export const List = async (req, res) => {
+export const List = async (req, res, next) => {
   try {
-    const product = await Product.find().exec();
+    const product = await productModel.find().exec();
     res.json(product);
   } catch (error) {
-    return res.status(404).json({
-      code: 404,
-      mesaage: "Not Found!",
-    });
+    next(error);
   }
 };
 
-export const create = async (req, res) => {
+export const create = async (req, res, next) => {
   try {
-    const newProduct = await new Product(req.body).save();
+    const { error } = productValidate(req.body);
+    if (error) {
+      throw createError(error.details.message);
+    }
+    console.log(1);
+    const newProduct = await new productModel(req.body).save();
     res.json(newProduct);
   } catch (error) {
-    return res.status(404).json({
-      code: 404,
-      mesaage: "Not Found!",
-    });
+    next(error);
   }
 };
 
-export const read = async (req, res) => {
+export const read = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const products = await Product.findOne({ _id: id }).exec();
+    const products = await productModel.findOne({ _id: id }).exec();
     res.json(products);
   } catch (error) {
-    return res.status(400).json({
-      error: "Không tìm thấy sản phẩm",
-    });
+    next(error);
   }
 };
 
-export const update = async (req, res) => {
+export const update = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const products = await Product.findOneAndUpdate({ _id: id }, req.body, {
-      new: true,
-    }).exec();
+    const products = await productModel
+      .findOneAndUpdate({ _id: id }, req.body, {
+        new: true,
+      })
+      .exec();
     res.json(products);
   } catch (error) {
-    return res.status(400).json({
-      error: "Không cập nhật được sản phẩm",
-    });
+    next(error);
   }
 };
 
-export const remove = async (req, res) => {
+export const remove = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const products = await Product.findOneAndDelete({ _id: id }).exec();
+    const products = await productModel.findOneAndDelete({ _id: id }).exec();
     res.json(products);
   } catch (error) {
-    return res.status(400).json({
-      error: "Không xóa được sản phẩm",
-    });
+    next(error);
   }
 };
