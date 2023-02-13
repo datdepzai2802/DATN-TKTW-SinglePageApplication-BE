@@ -1,1 +1,6 @@
-# Graduation_project_nodejs
+# DATN-BE
+
+### GIT
+Content commit:git commit -m  "feature, bug, fix/name"
+###
+
