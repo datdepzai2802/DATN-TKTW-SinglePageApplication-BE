@@ -1,0 +1,19 @@
+
+### register
+POST http://localhost:9090/api/v1/register
+Content-Type: application/json
+
+{
+    "email":"datmau20@gmail.com"
+}
+###verify otp
+POST http://localhost:9090/api/v1/verifyotp
+Content-Type: application/json
+
+{
+    "email":"datmau20@gmail.com",
+    "otp":""
+}
+###login
+
+POST http://localhost:9090/api/v1/login
