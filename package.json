@@ -1,5 +1,5 @@
 {
-  "name": "graduation_project",
+  "name": "DATN-BE",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -22,9 +22,11 @@
     "express": "^4.18.1",
     "http-errors": "^2.0.0",
     "joi": "^17.6.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.5.3",
     "morgan": "^1.10.0",
+    "nanoid": "^3.3.4",
     "nodemailer": "^6.9.1",
-    "otp-generator": "^4.0.0"
+    "otp-generator": "^4.0.1"
   }
 }
