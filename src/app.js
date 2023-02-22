@@ -5,7 +5,7 @@ import morgan from "morgan";
 import "dotenv/config";
 import router from "./v1/routers/index.router";
 import createError from "http-errors";
-
+import routerProduct from "./v1/routers/products/products.router";
 import routerCategory from "./v1/routers/categories/categories.router";
 //
 const app = express();
@@ -18,7 +18,7 @@ app.use(morgan("dev"));
 // router
 app.use("/api/v1", router);
 app.use("/api/v1", routerCategory);
-
+app.use("/api", routerProduct);
 //
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
@@ -36,7 +36,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/Pro220_DATN", (error) => {
   if (error) return console.log("Connect Database False!");
   console.log("Connect Database successfuly!");
 });
-
+// const PORT = 9000
 //create server
 app.listen(process.env.PORT, () => {
   console.log(`server running ${process.env.PORT}`);
