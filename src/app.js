@@ -5,10 +5,15 @@ import morgan from "morgan";
 import "dotenv/config";
 import router from "./v1/routers/index.router";
 import createError from "http-errors";
+
 import cookieParser from "cookie-parser";
+
+import routerProduct from "./v1/routers/products/products.router";
+import routerCategory from "./v1/routers/categories/categories.router";
+
 //
 const app = express();
-const PORT = process.env.PORT;
+// const PORT = process.env.PORT;
 //middlewaer
 app.use(express.json());
 app.use(cors());
@@ -17,7 +22,8 @@ app.use(cookieParser());
 
 // router
 app.use("/api/v1", router);
-
+app.use("/api/v1", routerCategory);
+app.use("/api", routerProduct);
 //
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
@@ -30,12 +36,14 @@ app.use((err, req, res, next) => {
 });
 
 //connect mongoose
+
 mongoose.connect(process.env.MONGGO_DB, (error) => {
+
   if (error) return console.log("Connect Database False!");
   console.log("Connect Database successfuly!");
 });
-
+// const PORT = 9000
 //create server
-app.listen(PORT, () => {
-  console.log(`server running ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`server running ${process.env.PORT}`);
 });
