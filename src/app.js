@@ -5,6 +5,7 @@ import morgan from "morgan";
 import "dotenv/config";
 import router from "./v1/routers/index.router";
 import createError from "http-errors";
+import cookieParser from "cookie-parser";
 //
 const app = express();
 const PORT = process.env.PORT;
@@ -12,6 +13,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use(cookieParser());
 
 // router
 app.use("/api/v1", router);
@@ -28,7 +30,7 @@ app.use((err, req, res, next) => {
 });
 
 //connect mongoose
-mongoose.connect(process.env.MONGGODB_Link, (error) => {
+mongoose.connect(process.env.MONGGO_DB, (error) => {
   if (error) return console.log("Connect Database False!");
   console.log("Connect Database successfuly!");
 });
