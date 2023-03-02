@@ -49,8 +49,8 @@ const createUser = async ({ email }) => {
   try {
     const passwordUser = nanoid(8);
     const salt = await bcrypt.genSalt(10);
+    console.log("password User", passwordUser);
     const hashPassword = await bcrypt.hash(passwordUser, salt);
-    console.log("passwordUser", passwordUser);
     const user = await _User.create({
       email,
       password: hashPassword,
@@ -72,6 +72,7 @@ const createUser = async ({ email }) => {
 export const verifyOtpSevice = async ({ email, otp }) => {
   try {
     const otps = await _Otp.find({ email });
+    console.log("otp", otps);
     if (otps.length === 0) {
       return {
         code: 404,
