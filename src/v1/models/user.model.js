@@ -1,3 +1,4 @@
+// import { boolean } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
@@ -20,6 +21,13 @@ const userSchema = mongoose.Schema({
   },
   phoneNumber: {
     type: Number,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  address: {
+    type: String,
   },
   role: {
     type: Number,
