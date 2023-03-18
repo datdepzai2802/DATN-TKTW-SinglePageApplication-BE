@@ -8,6 +8,7 @@ import createError from "http-errors";
 import routerProduct from "./v1/routers/products/products.router";
 import routerCategory from "./v1/routers/categories/categories.router";
 import routerPuslishing from "./v1/routers/publishing/publishing.router";
+import routerAuthor from "./v1/routers/author/author.router";
 
 //
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/v1", router);
 app.use("/api/v1", routerCategory);
 app.use("/api", routerProduct);
 app.use("/api", routerPuslishing);
+app.use("/api", routerAuthor);
 //
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
