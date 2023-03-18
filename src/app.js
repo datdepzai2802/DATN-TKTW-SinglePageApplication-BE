@@ -7,6 +7,7 @@ import router from "./v1/routers/index.router";
 import createError from "http-errors";
 import routerProduct from "./v1/routers/products/products.router";
 import routerCategory from "./v1/routers/categories/categories.router";
+import routerFormbook from "./v1/routers/formbook/formbook.router";
 //
 const app = express();
 // const PORT = process.env.PORT;
@@ -19,6 +20,7 @@ app.use(morgan("dev"));
 app.use("/api/v1", router);
 app.use("/api/v1", routerCategory);
 app.use("/api", routerProduct);
+app.use("/api", routerFormbook);
 //
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
