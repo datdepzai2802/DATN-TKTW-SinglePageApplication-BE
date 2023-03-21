@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 const dbConfig = {
   url: process.env.MONGGO_URL,
   database: process.env.MONGGO_DATABASE,
