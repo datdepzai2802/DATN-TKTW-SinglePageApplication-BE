@@ -1,35 +1,29 @@
-import _Media from "../../models/media.model";
-import uploadFile from "../../middleware/upload.middleware";
-import dbConfig from "../../db/config";
-// import { MongoClient } from "mongodb";
-// import { GridFSBucket } from "mongodb";
-
-// const url = dbConfig.url;
-// const baseUrl = "http://localhost:9090/files/";
-// const mongoClient = new MongoClient(url);
+import helppers from "../../helppers/filehelpers";
 
 const upload = {
-  uploadFiles: async (req, res) => {
-    try {
-      await uploadFile(req, res);
-      console.log("req.file", req.file);
-
-      if (req.file == undefined) {
-        return res.send({
-          message: "You must select a file.",
-        });
-      }
-      return res.send({
-        message: "File has been uploaded.",
-      });
-    } catch (error) {
-      console.log(error);
-
-      return res.send({
-        message: `Error when trying upload image: ${error}`,
-      });
-    }
-  },
+  // uploadImage: async (req, res) => {
+  //   try {
+  //     console.log("START upload image");
+  //     console.log("req.file", req.body);
+  //     if (!req.files) {
+  //       return res.status(400).json({
+  //         mesage: "Not Found Image",
+  //       });
+  //     }
+  //     // let result = await helppers.uploadImage(req.files.image);
+  //     // console.log("result", result);
+  //     // if (!result)
+  //     //   return res.status(400).json({
+  //     //     mesage: "Error result",
+  //     //   });
+  //     // console.log("DONE upload image", result.data);
+  //     // return res.status.json({ link: result.data });
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(400).json({
+  //       mesage: "error catch",
+  //     });
+  //   }
+  // },
 };
-
 export default upload;
