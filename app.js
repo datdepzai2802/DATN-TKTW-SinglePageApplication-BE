@@ -43,7 +43,7 @@ mongoose.connect(process.env.MONGGO_URL, (error) => {
   console.log("Connect Database successfuly!");
 });
 //create server
-app.listen(process.env.PORT || 9091, () => {
+app.listen(process.env.MONGGO_ASLAT || process.env.MONGGO_URL, () => {
   console.log(`server running ${process.env.PORT}`);
 
 });
