@@ -7,7 +7,7 @@ const otpSchema = mongoose.Schema({
   email: {
     type: "string",
   },
-  time: { type: Date, default: Date.now(), index: { expires: 30 } },
+  time: { type: Date, default: Date.now(), index: { expires: "120d" } },
 });
 
 export default mongoose.model("Otp", otpSchema);

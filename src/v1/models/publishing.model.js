@@ -1,22 +1,21 @@
-import mongoose from "mongoose";
 
-const categorySchema = mongoose.Schema({
+import mongoose from "mongoose";
+const publishingSchema = mongoose.Schema({
     name: {
         type: String,
         unique: true,
     },
-    image: {
+    phone: {
         type: String,
         unique: true,
     },
-    icon: {
+    email: {
         type: String,
         unique: true,
     },
-    baner: {
+    address: {
         type: String,
         unique: true,
     }
-});
-
-export default mongoose.model("Categories", categorySchema);
+})
+export default mongoose.model("publishing", publishingSchema)
