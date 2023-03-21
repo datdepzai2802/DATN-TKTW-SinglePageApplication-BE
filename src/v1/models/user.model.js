@@ -1,3 +1,4 @@
+// import { boolean } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
@@ -16,9 +17,17 @@ const userSchema = mongoose.Schema({
   },
   avatar: {
     type: String,
+    default: "https://i1.wp.com/i.imgur.com/a5rfZ9Q.jpg?resize=502%2C504&ssl=1",
   },
   phoneNumber: {
     type: Number,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  address: {
+    type: String,
   },
   role: {
     type: Number,
