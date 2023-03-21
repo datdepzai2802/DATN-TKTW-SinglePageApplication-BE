@@ -21,11 +21,12 @@ app.use(cors());
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.set("view engine", "ejs");
+
 app.use(morgan("dev"));
 app.use(cookieParser());
 
 app.use("/api/v1", router);
-// app.use("/upload", express.static(path.join(__dirname, "upload")));
+
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
 });
@@ -44,4 +45,5 @@ mongoose.connect(process.env.MONGGO_URL, (error) => {
 //create server
 app.listen(process.env.PORT || 9091, () => {
   console.log(`server running ${process.env.PORT}`);
+
 });
