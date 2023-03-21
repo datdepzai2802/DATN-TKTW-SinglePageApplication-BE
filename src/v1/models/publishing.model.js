@@ -5,10 +5,6 @@ const publishingSchema = mongoose.Schema({
         type: String,
         unique: true,
     },
-    name: {
-        type: String,
-        unique: true,
-    },
     phone: {
         type: String,
         unique: true,

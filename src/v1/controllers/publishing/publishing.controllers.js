@@ -1,4 +1,4 @@
-import Publishing from "../../models/publishing";
+import Publishing from "../../models/publishing.model";
 export const list = async (req, res) => {
     try {
         const data = await Publishing.find();
@@ -14,9 +14,9 @@ export const read = async (req, res) => {
     const filter = { _id: req.params.id };
     const populate = req.query["_expand"];
     try {
-        const product = await Publishing.findOne(filter).select("-__v").populate(populate).exec();
-        console.log("product", product);
-        res.json(product);
+        const publishing = await Publishing.findOne(filter).select("-__v").populate(populate).exec();
+        console.log("publishing", publishing);
+        res.json(publishing);
     } catch (error) {
         res.status(400).json({
             message: "Error: not data",
@@ -27,10 +27,10 @@ export const read = async (req, res) => {
 export const add = async (req, res) => {
     try {
         console.log("product");
-        const product = await Publishing(req.body).save();
-        console.log("product");
-        return res.json(product);
-        console.log("product", product);
+        const publishing = await Publishing(req.body).save();
+        console.log("publishing");
+        return res.json(publishing);
+        console.log("publishing", publishing);
     } catch (error) {
         res.status(400).json({
             error: "Error: not create data",
@@ -40,8 +40,8 @@ export const add = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const id = req.params.id;
-        const product = await Publishing.findOneAndDelete({ _id: id }).exec();
-        res.json(product);
+        const publishing = await Publishing.findOneAndDelete({ _id: id }).exec();
+        res.json(publishing);
     } catch (error) {
         res.status(400).json({
             error: "Error: not remove data",
@@ -51,10 +51,10 @@ export const remove = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
-        const product = await Publishing.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        const publishing = await Publishing.findOneAndUpdate({ _id: req.params.id }, req.body, {
             new: true,
         });
-        res.json(product);
+        res.json(publishing);
     } catch (error) {
         res.status(400).json({
             error: "Error: not update data",

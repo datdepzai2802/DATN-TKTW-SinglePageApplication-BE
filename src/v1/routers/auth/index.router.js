@@ -1,5 +1,7 @@
 import express from "express";
-import login from "../../controllers/auth/login.controllers";
+import login, {
+  requestRefreshToken,
+} from "../../controllers/auth/login.controllers";
 import {
   register,
   veriryOtp,
@@ -10,5 +12,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/verifyotp", veriryOtp);
 router.post("/login", login);
+router.post("/refreshtoken", requestRefreshToken);
 
 export default router;
+

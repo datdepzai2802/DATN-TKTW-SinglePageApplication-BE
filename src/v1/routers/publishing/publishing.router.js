@@ -4,8 +4,8 @@ import { add, list, read, remove, update } from "../../controllers/publishing/pu
 const router = express.Router()
 router.get("/publishs",list)
 router.get("/publish/:id",read)
-router.get("/publish",add)
-router.get("/publishs",update)
-router.get("/publishs",remove)
+router.post("/publish",add)
+router.patch("/publishs/:id",update)
+router.delete("/publishs/:id",remove)
 
 export default router
