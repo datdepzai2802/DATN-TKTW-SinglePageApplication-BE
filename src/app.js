@@ -7,6 +7,9 @@ import dbConfig from "./v1/db/config";
 import router from "./v1/routers/index.router";
 import createError from "http-errors";
 
+import cookieParser from "cookie-parser";
+
+
 import routerProduct from "./v1/routers/products/products.router";
 import routerCategory from "./v1/routers/categories/categories.router";
 import routerFormbook from "./v1/routers/formbook/formbook.router";
@@ -33,6 +36,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 app.use("/api/v1", router);
+
 app.use("/api/v1", routerCategory);
 app.use("/api", routerProduct);
 app.use("/api", routerFormbook);
@@ -50,8 +54,10 @@ app.use((err, req, res, next) => {
 
 //connect mongoose
 
+
 mongoose.connect(`${dbConfig.url}/${dbConfig.database}`, (error) => {
-  if (error) return console.log("Connect Database False!");
+
+ if (error) return console.log("Connect Database False!");
   console.log("Connect Database successfuly!");
 });
 //create server

@@ -5,7 +5,7 @@ const productSchema = mongoose.Schema({
         type: String,
         unique: true,
     },
-    image: {
+    view: {
         type: String,
         unique: true,
     },
@@ -13,22 +13,9 @@ const productSchema = mongoose.Schema({
         type: String,
         unique: true,
     },
-    shorDescription: {
-
-        type: String,
-        unique: true,
-    },
     price: {
         type: Number,
         unique: true,
-    },
-    saleoffPrice: {
-        type: Number,
-        unique: true
-    },
-    categoryid: {
-        type: Number,
-        unique: true
     }
 })
 export default mongoose.model("products", productSchema)
