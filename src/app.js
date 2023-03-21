@@ -6,8 +6,15 @@ import "dotenv/config";
 import dbConfig from "./v1/db/config";
 import router from "./v1/routers/index.router";
 import createError from "http-errors";
+
+import routerProduct from "./v1/routers/products/products.router";
+import routerCategory from "./v1/routers/categories/categories.router";
+import routerPuslishing from "./v1/routers/publishing/publishing.router";
+
+
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+
 const app = express();
 
 const corsOptinon = {
@@ -22,9 +29,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
-// router
 app.use("/api/v1", router);
-//
+app.use("/api/v1", routerCategory);
+app.use("/api", routerProduct);
+app.use("/api", routerPuslishing);
+
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
 });
