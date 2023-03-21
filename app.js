@@ -1,28 +1,18 @@
 import express from "express";
 import mongoose from "mongoose";
+// const express = require("express");
+// const mongoose = require("mongoose");
 import cors from "cors";
 import morgan from "morgan";
 import "dotenv/config";
-import dbConfig from "./v1/db/config";
-import router from "./v1/routers/index.router";
+import dbConfig from "./src/v1/db/config";
+import router from "./src/v1/routers/index.router";
 import createError from "http-errors";
-
-import cookieParser from "cookie-parser";
-
-
-import routerProduct from "./v1/routers/products/products.router";
-import routerCategory from "./v1/routers/categories/categories.router";
-import routerFormbook from "./v1/routers/formbook/formbook.router";
-import routerPuslishing from "./v1/routers/publishing/publishing.router";
-import routerAuthor from "./v1/routers/author/author.router";
-
-
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-
-
 const app = express();
-
+// const dotenv = require("dotenv");
+// dotenv.config();
 const corsOptinon = {
   origin: "http://localhost:9090",
 };
@@ -37,11 +27,6 @@ app.use(cookieParser());
 
 app.use("/api/v1", router);
 
-app.use("/api/v1", routerCategory);
-app.use("/api", routerProduct);
-app.use("/api", routerFormbook);
-app.use("/api", routerPuslishing);
-app.use("/api", routerAuthor);
 app.use((req, res, next) => {
   return next(createError.NotFound("NOT FOUND!!!"));
 });
@@ -53,14 +38,12 @@ app.use((err, req, res, next) => {
 });
 
 //connect mongoose
-
-
+console.log("dbConfig", process.env.PORT);
 mongoose.connect(`${dbConfig.url}/${dbConfig.database}`, (error) => {
-
- if (error) return console.log("Connect Database False!");
+  if (error) return console.log("Connect Database False!");
   console.log("Connect Database successfuly!");
 });
-//create server
-app.listen(process.env.PORT || 9000, () => {
-  console.log(`server running ${process.env.PORT}`);
+const PORT = 9091;
+app.listen(dbConfig.post || PORT, () => {
+  console.log(`server running ${dbConfig.port || PORT}`);
 });
