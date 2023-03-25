@@ -38,12 +38,14 @@ app.use((err, req, res, next) => {
 });
 
 //connect mongoose
-mongoose.connect(process.env.MONGGO_URL, (error) => {
-  if (error) return console.log("Connect Database False!");
-  console.log("Connect Database successfuly!");
-});
+mongoose.connect(
+  process.env.MONGGO_ASLAT || process.env.MONGGO_URL,
+  (error) => {
+    if (error) return console.log("Connect Database False!");
+    console.log("Connect Database successfuly!");
+  }
+);
 //create server
-app.listen(process.env.MONGGO_ASLAT || process.env.MONGGO_URL, () => {
+app.listen(process.env.PORT || 9091, () => {
   console.log(`server running ${process.env.PORT}`);
-
 });
