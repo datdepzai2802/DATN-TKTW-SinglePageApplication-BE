@@ -7,6 +7,8 @@ import routerProduct from "./products/products.router";
 import routerFormbook from "./formbook/formbook.router";
 import routerPuslishing from "./publishing/publishing.router";
 import routerAuthor from "./author/author.router";
+import routerSupplier from "./supplieres/supplieres.router";
+
 
 const router = express.Router();
 
@@ -17,5 +19,6 @@ router.use("", routerPuslishing);
 router.use("", routerAuthor);
 router.use("", routerProduct);
 router.use("", routerCategory);
+router.use("", routerSupplier);
 
 export default router;
