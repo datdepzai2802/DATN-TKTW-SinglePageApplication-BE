@@ -8,7 +8,7 @@ import routerProduct from "./products/products.router";
 import routerFormbook from "./formbook/formbook.router";
 import routerPuslishing from "./publishing/publishing.router";
 import routerAuthor from "./author/author.router";
-
+import routerRate from "./rate/rating.router"
 const router = express.Router();
 
 router.use("", auth);
@@ -17,5 +17,6 @@ router.use("", routerUser);
 router.use("", routerFormbook);
 router.use("", routerPuslishing);
 router.use("", routerAuthor);
+router.use("", routerRate)
 
 export default router;
