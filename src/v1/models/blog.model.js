@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const blogSchema = mongoose.Schema({
   title: {
@@ -9,11 +9,11 @@ const blogSchema = mongoose.Schema({
   },
   isHidden: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   userId: {
     type: ObjectId,
-    ref: "user",
+    ref: "User",
   },
 });
 

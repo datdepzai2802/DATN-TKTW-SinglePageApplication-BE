@@ -5,7 +5,7 @@ const Search = {
     const data = req.body;
     if (!data) {
       return res.status(400).json({
-        mesage: "find not data!",
+        mesage: "Can't find data",
       });
     }
   },

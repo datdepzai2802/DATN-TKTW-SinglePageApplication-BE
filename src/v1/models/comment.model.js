@@ -1,5 +1,4 @@
-import { number } from "joi";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const commentSchema = mongoose.Schema({
   title: {
@@ -10,7 +9,7 @@ const commentSchema = mongoose.Schema({
   },
   isHidden: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   like: {
     type: Number,
@@ -29,4 +28,4 @@ const commentSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model("comment", commentSchema);
+export default mongoose.model("Comment", commentSchema);
