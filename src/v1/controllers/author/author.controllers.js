@@ -13,6 +13,11 @@ export const read = async (req, res) => {
   const filter = { _id: req.params.id };
   try {
     const author = await _Author.findOne(filter).exec();
+    if (!author) {
+      return res.status(404).json({
+        message: "Can't find author",
+      });
+    }
     return res.status(200).json(author);
   } catch (error) {
     res.status(400).json({

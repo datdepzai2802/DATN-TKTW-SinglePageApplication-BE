@@ -1,25 +1,16 @@
-
 import mongoose from "mongoose";
 const supplieresSchema = mongoose.Schema({
-    id: {
-        type: String,
-        unique: true,
-    },
-    name: {
-        type: String,
-        unique: true,
-    },
-    phone: {
-        type: string,
-        unique: true,
-    },
-    email: {
-     type: string,
-     unique: true,
-     },
-    address: {
-     type: string,
-     unique: true,
-     }
-})
-export default mongoose.model("supplieres", supplieresSchema)
+  name: {
+    type: String,
+  },
+  phone: {
+    type: string,
+  },
+  email: {
+    type: string,
+  },
+  address: {
+    type: string,
+  },
+});
+export default mongoose.model("Supplieres", supplieresSchema);

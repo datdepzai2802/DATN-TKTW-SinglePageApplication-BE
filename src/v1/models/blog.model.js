@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const blogSchema = mongoose.Schema({
   title: {
@@ -13,7 +13,7 @@ const blogSchema = mongoose.Schema({
   },
   userId: {
     type: ObjectId,
-    ref: "user",
+    ref: "User",
   },
 });
 

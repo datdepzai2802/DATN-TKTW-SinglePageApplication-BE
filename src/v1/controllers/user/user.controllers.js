@@ -6,7 +6,7 @@ const User = {
       const users = await _User.find();
       if (!users) {
         return res.status(400).json({
-          mesage: "Can not find data!",
+          mesage: "Can't find data!",
         });
       }
       res.status(200).json(users);
@@ -20,7 +20,7 @@ const User = {
       const user = await _User.findOne({ _id: id });
       if (!user) {
         return res.status(404).json({
-          mesage: "user not found!",
+          mesage: "User not found!",
         });
       }
       res.status(200).json(user);
@@ -48,7 +48,7 @@ const User = {
       const user = await _User(data).save();
       if (!user) {
         return res.status(400).json({
-          mesage: "create user fails",
+          mesage: "Create user fail",
         });
       }
       res.json(user);
@@ -60,17 +60,17 @@ const User = {
     try {
       const { id } = req.params;
       const data = req.body;
-      const user = await _User.findByIdAndUpdate({ _id: id }, data, {
+      const user = await _User.findOneAndUpdate({ _id: id }, data, {
         new: true,
       });
       if (!user) {
         return res.status(400).json({
-          mesage: "update user fails",
+          mesage: "Update user fail",
         });
       }
       res.status(200).json(user);
     } catch (error) {
-      console.log(error);
+      console.log("error", error);
     }
   },
 };

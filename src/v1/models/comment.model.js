@@ -1,5 +1,4 @@
-import { number } from "joi";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const commentSchema = mongoose.Schema({
   title: {

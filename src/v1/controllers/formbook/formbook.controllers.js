@@ -11,13 +11,14 @@ export const list = async (req, res) => {
 };
 export const read = async (req, res) => {
   const filter = { _id: req.params.id };
-  const populate = req.query["_expand"];
   try {
-    const formbook = await _Formbook.findOne(filter)
-      .select("-__v")
-      .populate(populate)
-      .exec();
-      return res.status(200).json(formbook);
+    const formbook = await _Formbook.findOne(filter).exec();
+    if (!formbook) {
+      return res.status(404).json({
+        message: "Can't find formbook",
+      });
+    }
+    return res.status(200).json(formbook);
   } catch (error) {
     res.status(400).json({
       message: "Can't find formbook",
