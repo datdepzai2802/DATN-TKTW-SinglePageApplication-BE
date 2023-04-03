@@ -1,11 +1,11 @@
-import supplieres from "../../models/product.model"
+import _Supplieres from "../../models/product.model"
 export const listSupplieres = async (req, res) => {
     try {
-        const data = await supplieres.find();
-        res.json(data);
+        const data = await _Supplieres.find();
+        return res.status(200).json(data);
     } catch (error) {
         res.status(400).json({
-            error: "Không có nhà cung cấp nào",
+            error: "Can't find supplieres",
         })
     }
 }
@@ -13,47 +13,46 @@ export const readSupplieres = async (req, res) => {
     const filter = { _id: req.params.id };
     const populate = req.query["_expand"];
     try {
-        const supplieres = await supplieres.findOne(filter).select("-__v").populate(populate).exec();
+        const supplieres = await _Supplieres.findOne(filter).select("-__v").populate(populate).exec();
         console.log("supplieres", supplieres);
-        res.json(supplieres);
+        return res.status(200).json(supplieres);
     } catch (error) {
         res.status(400).json({
-            message: "Không tìm thấy nhà cung cấp",
-            error,
+            error: "Can't find supplieres"
         })
     }
 }
 export const addSupplieres = async (req, res) => {
     try {
-        const suppliery = await supplieres(req.body).save();
-        return res.json(suppliery);
+        const suppliery = await _Supplieres(req.body).save();
+        return res.status(200).json(suppliery);
     } catch (error) {
         res.status(400).json({
-            error: "Không thêm được nhà cung cấp",
+            error: "Can't add supplieres"
         })
     }
 }
 export const removeSupplieres = async (req, res) => {
     try {
         const id = req.params.id;
-        const suppliery = await supplieres.findOneAndDelete({ _id: id }).exec();
-        res.json(suppliery);
+        const suppliery = await _Supplieres.findOneAndDelete({ _id: id }).exec();
+        return res.status(200).json(suppliery);
     } catch (error) {
         res.status(400).json({
-            error: "Không xóa được sản phẩm",
+            error: "Can't delete supplieres",
         })
     }
 }
 
 export const updateSupplieres = async (req, res) => {
     try {
-        const suppliery = await supplieres.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        const suppliery = await _Supplieres.findOneAndUpdate({ _id: req.params.id }, req.body, {
             new: true,
         });
-        res.json(suppliery);
+        return res.status(200).json(suppliery);
     } catch (error) {
         res.status(400).json({
-            error: "Không cập nhật được nhà cung cấp",
+            error: "Can't update supplieres",
         })
     }
 }

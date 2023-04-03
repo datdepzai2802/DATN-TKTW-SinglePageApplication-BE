@@ -10,7 +10,7 @@ const commentSchema = mongoose.Schema({
   },
   isHidden: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   like: {
     type: Number,
@@ -29,4 +29,4 @@ const commentSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model("comment", commentSchema);
+export default mongoose.model("Comment", commentSchema);

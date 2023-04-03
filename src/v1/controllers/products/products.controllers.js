@@ -1,62 +1,60 @@
-import Product from "../../models/product.model"
+import _Product from "../../models/product.model"
+
 export const listProduct = async (req, res) => {
     try {
-        const data = await Product.find();
-        res.json(data);
+        const data = (await _Product.find().limit(20));
+        return res.status(200).json(data);
     } catch (error) {
         res.status(400).json({
-            error: "Không có sản phẩm nào",
+            error: "Can't find product",
         })
     }
 }
 export const readProduct = async (req, res) => {
     const filter = { _id: req.params.id };
-    const populate = req.query["_expand"];
     try {
-        const product = await Product.findOne(filter).select("-__v").populate(populate).exec();
-        console.log("product", product);
-        res.json(product);
+        const product = await _Product.findOne(filter).exec();
+        return res.status(200).json(product);
     } catch (error) {
         res.status(400).json({
-            message: "Không tìm thấy sản phẩm",
+            message: "Can't find product",
             error,
         })
     }
 }
+
 export const addProduct = async (req, res) => {
     try {
-        console.log("product");
-        const product = await Product(req.body).save();
-        console.log("product");
-        return res.json(product);
-        console.log("product", product);
+        const product = await _Product(req.body).save();
+        return res.status(200).json(product);
     } catch (error) {
         res.status(400).json({
-            error: "Không thêm được sản phẩm",
+            error: "Can't add product",
         })
     }
 }
+
 export const removeProduct = async (req, res) => {
     try {
         const id = req.params.id;
-        const product = await Product.findOneAndDelete({ _id: id }).exec();
-        res.json(product);
+        const product = await _Product.findOneAndDelete({ _id: id }).exec();
+        return res.status(200).json(product);
     } catch (error) {
         res.status(400).json({
-            error: "Không xóa được sản phẩm",
+            error: "Can't delete product",
         })
     }
 }
 
 export const updateProduct = async (req, res) => {
     try {
-        const product = await Product.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        const product = await _Product.findOneAndUpdate({ _id: req.params.id }, req.body, {
             new: true,
         });
-        res.json(product);
+        return res.status(200).json(product);
     } catch (error) {
         res.status(400).json({
-            error: "Không cập nhật được sản phẩm",
+            error: "Can't update product",
         })
     }
 }

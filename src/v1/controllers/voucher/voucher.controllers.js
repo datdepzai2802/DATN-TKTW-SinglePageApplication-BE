@@ -1,11 +1,11 @@
-import Voucher from "../../models/voucher.model";
+import _Voucher from "../../models/voucher.model";
 export const list = async (req, res) => {
     try {
-        const data = await Voucher.find();
-        res.json(data);
+        const data = await _Voucher.find();
+        return res.status(200).json(data);
     } catch (error) {
         res.status(400).json({
-            error: "Error: Voucher does not data",
+            error: "Can't find voucher",
         })
     }
 }
@@ -13,50 +13,46 @@ export const read = async (req, res) => {
     const filter = {voucherId: req.params.voucherId };
     const populate = req.query["_expand"];
     try {
-        const voucher = await Voucher.findOne(filter).select("-__v").populate(populate).exec();
+        const voucher = await _Voucher.findOne(filter).select("-__v").populate(populate).exec();
         console.log("voucher", voucher);
-        res.json(voucher);
+        return res.status(200).json(voucher);
     } catch (error) {
         res.status(400).json({
-            message: "Error: Voucher does not exist",
-            error,
+            error: "Can't find voucher",
         })
     }
 }
 export const add = async (req, res) => {
     try {
-        console.log("product");
-        const voucher = await Voucher(req.body).save();
-        console.log("voucher");
-        return res.json(voucher);
-        console.log("voucher", voucher);
+        const voucher = await _Voucher(req.body).save();
+        return res.status(200).json(voucher);
     } catch (error) {
         res.status(400).json({
-            error: "Error: not create voucher",
+            error: "Can't add voucher",
         })
     }
 }
 export const remove = async (req, res) => {
     try {
         const id = req.params.id;
-        const voucher = await Voucher.findOneAndDelete({ _id: id }).exec();
-        res.json(voucher);
+        const voucher = await _Voucher.findOneAndDelete({ _id: id }).exec();
+        return res.status(200).json(voucher);
     } catch (error) {
         res.status(400).json({
-            error: "Error: not remove voucher",
+            error: "Can't delete voucher",
         })
     }
 }
 
 export const update = async (req, res) => {
     try {
-        const voucher = await Voucher.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        const voucher = await _Voucher.findOneAndUpdate({ _id: req.params.id }, req.body, {
             new: true,
         });
-        res.json(voucher);
+        return res.status(200).json(voucher);
     } catch (error) {
         res.status(400).json({
-            error: "Error: not update data",
+            error: "Can't update voucher",
         })
     }
 }

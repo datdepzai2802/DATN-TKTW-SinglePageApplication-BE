@@ -16,8 +16,12 @@ const voucherSchema = mongoose.Schema({
     apply:{
         type:String,
         unique: true
-    }
+    },
+    isActive: {
+        type: Boolean, 
+        default: false
+    },
 
 })
 
-export default mongoose.model("vouchers", voucherSchema)
+export default mongoose.model("Voucher", voucherSchema)

@@ -9,7 +9,7 @@ const blogSchema = mongoose.Schema({
   },
   isHidden: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   userId: {
     type: ObjectId,
