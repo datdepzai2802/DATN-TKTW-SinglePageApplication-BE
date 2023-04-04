@@ -2,10 +2,14 @@ import _Formbook from "../../models/formbook.model";
 export const list = async (req, res) => {
   try {
     const data = await _Formbook.find();
-    return res.status(200).json(data);
+    return res.json({
+      succsessCode: 200,
+      data: data,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't find formbook",
+    return res.json({
+      errorCode: 400,
+      message: "Can't list formbook",
     });
   }
 };
@@ -14,25 +18,33 @@ export const read = async (req, res) => {
   try {
     const formbook = await _Formbook.findOne(filter).exec();
     if (!formbook) {
-      return res.status(404).json({
-        message: "Can't find formbook",
+      return res.json({
+        errorCode: 404,
+        message: "Formbook is not valid",
       });
     }
-    return res.status(200).json(formbook);
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
+    return res.json({
+      errorCode: 400,
       message: "Can't find formbook",
-      error,
     });
   }
 };
 export const add = async (req, res) => {
   try {
     const formbook = await _Formbook(req.body).save();
-    return res.status(200).json(formbook);
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't add formbook",
+    return res.json({
+      errorCode: 400,
+      message: "Can't add formbook",
     });
   }
 };
@@ -40,10 +52,14 @@ export const remove = async (req, res) => {
   try {
     const id = req.params.id;
     const formbook = await _Formbook.findOneAndDelete({ _id: id }).exec();
-    return res.status(200).json(formbook);
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't delete formbook",
+    return res.json({
+      errorCode: 400,
+      message: "Can't delete formbook",
     });
   }
 };
@@ -57,10 +73,14 @@ export const update = async (req, res) => {
         new: true,
       }
     );
-    return res.status(200).json(formbook);
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't update data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't update formbook",
     });
   }
 };

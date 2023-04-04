@@ -2,10 +2,14 @@ import _Voucher from "../../models/voucher.model";
 export const list = async (req, res) => {
   try {
     const data = await _Voucher.find();
-    return res.status(200).json(data);
+    return res.json({
+      succsessCode: 200,
+      data: data,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't find voucher",
+    return res.json({
+      errorCode: 400,
+      message: "Can't list voucher",
     });
   }
 };
@@ -15,24 +19,33 @@ export const read = async (req, res) => {
   try {
     const voucher = await _Voucher.findOne(filter).exec();
     if (!voucher) {
-      return res.status(404).json({
-        message: "Can't find voucher",
+      return res.json({
+        errorCode: 404,
+        message: "Voucher is not valid",
       });
     }
-    return res.status(200).json(voucher);
+    return res.json({
+      succsessCode: 200,
+      data: voucher,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't find voucher",
+    return res.json({
+      errorCode: 400,
+      message: "Can't find voucher",
     });
   }
 };
 export const add = async (req, res) => {
   try {
     const voucher = await _Voucher(req.body).save();
-    return res.status(200).json(voucher);
+    return res.json({
+      succsessCode: 200,
+      data: voucher,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't add voucher",
+    return res.json({
+      errorCode: 400,
+      message: "Can't add voucher",
     });
   }
 };
@@ -40,10 +53,14 @@ export const remove = async (req, res) => {
   try {
     const id = req.params.id;
     const voucher = await _Voucher.findOneAndDelete({ _id: id }).exec();
-    return res.status(200).json(voucher);
+    return res.json({
+      succsessCode: 200,
+      data: voucher,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't delete voucher",
+    return res.json({
+      errorCode: 400,
+      message: "Can't delete voucher",
     });
   }
 };
@@ -57,10 +74,14 @@ export const update = async (req, res) => {
         new: true,
       }
     );
-    return res.status(200).json(voucher);
+    return res.json({
+      succsessCode: 200,
+      data: voucher,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't update voucher",
+    return res.json({
+      errorCode: 400,
+      message: "Can't update voucher",
     });
   }
 };
