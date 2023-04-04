@@ -2,10 +2,10 @@ import mongoose, { ObjectId } from "mongoose";
 
 const blogSchema = mongoose.Schema({
   title: {
-    type: string,
+    type: String,
   },
   html: {
-    type: string,
+    type: String,
   },
   isHidden: {
     type: Boolean,
