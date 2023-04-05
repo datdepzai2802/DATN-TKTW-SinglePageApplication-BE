@@ -2,10 +2,14 @@ import _Author from "../../models/author.model";
 export const list = async (req, res) => {
   try {
     const data = await _Author.find();
-    return res.status(200).json(data);
+    return res.json({
+      succsessCode: 200,
+      data: data,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't find author",
+    return res.json({
+      errorCode: 400,
+      message: "Email is not valid",
     });
   }
 };
@@ -14,24 +18,33 @@ export const read = async (req, res) => {
   try {
     const author = await _Author.findOne(filter).exec();
     if (!author) {
-      return res.status(404).json({
-        message: "Can't find author",
+      return res.json({
+        errorCode: 404,
+        message: "Author is not valid",
       });
     }
-    return res.status(200).json(author);
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't find author",
+    return res.json({
+      errorCode: 400,
+      message: "Can't find author",
     });
   }
 };
 export const add = async (req, res) => {
   try {
     const author = await _Author(req.body).save();
-    return res.status(200).json(author);
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't add author",
+    return res.json({
+      errorCode: 400,
+      message: "Can't add author",
     });
   }
 };
@@ -40,10 +53,14 @@ export const remove = async (req, res) => {
   try {
     const id = req.params.id;
     const author = await _Author.findOneAndDelete({ _id: id }).exec();
-    return res.status(200).json(author);
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't delete author",
+    return res.json({
+      errorCode: 400,
+      message: "Can't delete author",
     });
   }
 };
@@ -57,10 +74,14 @@ export const update = async (req, res) => {
         new: true,
       }
     );
-    return res.status(200).json(author);
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Can't update author",
+    return res.json({
+      errorCode: 400,
+      message: "Can't update author",
     });
   }
 };

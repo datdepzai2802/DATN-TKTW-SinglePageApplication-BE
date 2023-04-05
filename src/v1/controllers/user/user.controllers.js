@@ -5,13 +5,20 @@ const User = {
     try {
       const users = await _User.find();
       if (!users) {
-        return res.status(400).json({
-          mesage: "Can't find data!",
+        return res.json({
+          errorCode: 404,
+          message: "User is not valid",
         });
       }
-      res.status(200).json(users);
+      return res.json({
+        succsessCode: 200,
+        data: users,
+      });
     } catch (error) {
-      console.log(error);
+      return res.json({
+        errorCode: 400,
+        message: "Can't list user",
+      });
     }
   },
   read: async (req, res) => {
@@ -19,13 +26,20 @@ const User = {
       const { id } = req.params;
       const user = await _User.findOne({ _id: id });
       if (!user) {
-        return res.status(404).json({
-          mesage: "User not found!",
+        return res.json({
+          errorCode: 404,
+          message: "User is not valid",
         });
       }
-      res.status(200).json(user);
+      return res.json({
+        succsessCode: 200,
+        data: user,
+      });
     } catch (error) {
-      console.log(error);
+      return res.json({
+        errorCode: 400,
+        message: "Can't find user",
+      });
     }
   },
   remove: async (req, res) => {
@@ -33,13 +47,20 @@ const User = {
       const { id } = req.params;
       const rs = await _User.findOneAndDelete({ _id: id });
       if (!rs) {
-        return res.status(404).json({
-          mesage: "user not found!",
+        return res.json({
+          errorCode: 404,
+          message: "User is not valid",
         });
       }
-      res.json(rs);
+      return res.json({
+        succsessCode: 200,
+        data: rs,
+      });
     } catch (error) {
-      console.log(error);
+      return res.json({
+        errorCode: 400,
+        message: "Can't delete user",
+      });
     }
   },
   add: async (req, res) => {
@@ -47,13 +68,20 @@ const User = {
       const data = req.body;
       const user = await _User(data).save();
       if (!user) {
-        return res.status(400).json({
-          mesage: "Create user fail",
+        return res.json({
+          errorCode: 404,
+          message: "User is not valid",
         });
       }
-      res.json(user);
+      return res.json({
+        succsessCode: 200,
+        data: user,
+      });
     } catch (error) {
-      console.log(error);
+      return res.json({
+        errorCode: 400,
+        message: "Can't add user",
+      });
     }
   },
   update: async (req, res) => {
@@ -64,13 +92,20 @@ const User = {
         new: true,
       });
       if (!user) {
-        return res.status(400).json({
-          mesage: "Update user fail",
+        return res.json({
+          errorCode: 404,
+          message: "User is not valid",
         });
       }
-      res.status(200).json(user);
+      return res.json({
+        succsessCode: 200,
+        data: user,
+      });
     } catch (error) {
-      console.log("error", error);
+      return res.json({
+        errorCode: 400,
+        message: "Can't update user",
+      });
     }
   },
 };
