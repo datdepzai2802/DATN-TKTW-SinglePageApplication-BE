@@ -11,8 +11,8 @@ export const registerSevice = async ({ email }) => {
     const user = await _User.findOne({ email });
     if (user) {
       return {
-        code: 404,
-        message: "user exit",
+        code: 400,
+        message: "Account already exists",
       };
     }
     const otpCreate = OtpGenerator.generate(6, {
@@ -30,8 +30,8 @@ export const registerSevice = async ({ email }) => {
     if (resultOtp) {
       sendMailSevice({
         gmail: email,
-        subject: "check otp",
-        text: `otp ${otpCreate}`,
+        subject: "OTP shop books Niki",
+        text: `otp: ${otpCreate}`,
         html: "",
       });
     }
@@ -58,8 +58,8 @@ const createUser = async ({ email }) => {
     if (user) {
       sendMailSevice({
         gmail: email,
-        subject: "check auth otp",
-        text: `otp check auth ${passwordUser}`,
+        subject: "OTP Account shop books Niki",
+        text: `Chào mừng bạn đến với Niki, tài khoản:${gmail} password:${passwordUser}`,
         html: "",
       });
     }
@@ -76,7 +76,7 @@ export const verifyOtpSevice = async ({ email, otp }) => {
     if (otps.length === 0) {
       return {
         code: 404,
-        message: "expired otp",
+        message: "Expired otp",
       };
     }
     const lastOtp = otps[otps.length - 1];
@@ -84,7 +84,7 @@ export const verifyOtpSevice = async ({ email, otp }) => {
     if (!isvalid) {
       return {
         code: 401,
-        message: "otp inValid",
+        message: "Otp inValid",
       };
     }
     if (isvalid && email === lastOtp.email) {

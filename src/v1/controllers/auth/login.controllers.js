@@ -25,16 +25,19 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await _User.findOne({ email }).exec();
+
     if (!user) {
-      return res.status(400).json({
-        message: "Email không tồn tại",
+      return res.json({
+        errorCode: 401,
+        message: "Incorrect account or password",
       });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(400).json({
-        message: "Sai mật khẩu",
+      return res.json({
+        errorCode: 401,
+        message: "Incorrect account or password",
       });
     }
 
@@ -59,10 +62,16 @@ const login = async (req, res, next) => {
         token,
       };
       console.log("User", User);
-      return res.status(200).json(User);
+      return res.json({
+        successCode: 200,
+        data: User,
+      });
     }
   } catch (error) {
-    next(error);
+    return res.json({
+      successCode: 400,
+      message: error,
+    });
   }
 };
 

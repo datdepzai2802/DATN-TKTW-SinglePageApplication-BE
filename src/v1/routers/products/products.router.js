@@ -1,8 +1,14 @@
-
-import express from "express"
-import { addProduct, listProduct, readProduct, removeProduct, updateProduct } from "../../controllers/products/products.controllers";
+import express from "express";
+import {
+  addProduct,
+  listProduct,
+  readProduct,
+  removeProduct,
+  updateProduct,
+} from "../../controllers/products/products.controllers";
 
 const router = express.Router();
+
 router.get("/product", listProduct)
 router.get("/product/:id", readProduct)
 router.post("/product", addProduct)

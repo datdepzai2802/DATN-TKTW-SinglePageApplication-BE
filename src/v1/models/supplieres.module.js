@@ -13,4 +13,5 @@ const supplieresSchema = mongoose.Schema({
     type: string,
   },
 });
+
 export default mongoose.model("Supplieres", supplieresSchema);

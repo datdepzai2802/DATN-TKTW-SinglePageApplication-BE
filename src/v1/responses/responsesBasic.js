@@ -1,4 +1,4 @@
-export const success = function ({ result = {}, code = 200, message = "" }) {
+export const successFNC = function ({ result = {}, code = 200, message = "" }) {
   return res.json({
     result,
     code,
@@ -9,7 +9,7 @@ export const success = function ({ result = {}, code = 200, message = "" }) {
 /**
  * Custom error response
  */
-export const error = function ({
+export const errorFNC = function ({
   errors = {},
   code = 400,
   message = "",
@@ -27,7 +27,7 @@ export const error = function ({
  * (status 403)
  * Bad request response
  */
-export const badreq = function ({
+export const badreqFNC = function ({
   errors = {},
   code = 400,
   message = "",
@@ -40,7 +40,7 @@ export const badreq = function ({
  * (status 403)
  * Forbidden request response
  */
-export const forbidden = function ({
+export const forbiddenFNC = function ({
   errors = {},
   code = 403,
   message = "",
@@ -53,7 +53,7 @@ export const forbidden = function ({
  * (status 401)
  * Unauthorize request response
  */
-export const unauth = function ({
+export const unauthFNC = function ({
   errors = {},
   code = 401,
   message = "",
@@ -66,7 +66,7 @@ export const unauth = function ({
  * (status 500)
  * Internal request response
  */
-export const internal = function ({
+export const internalFNC = function ({
   errors = {},
   code = 500,
   message = "",
