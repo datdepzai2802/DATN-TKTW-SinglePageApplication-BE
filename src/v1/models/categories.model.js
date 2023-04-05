@@ -1,22 +1,18 @@
 import mongoose from "mongoose";
 
 const categorySchema = mongoose.Schema({
-    name: {
-        type: String,
-        unique: true,
-    },
-    image: {
-        type: String,
-        unique: true,
-    },
-    icon: {
-        type: String,
-        unique: true,
-    },
-    baner: {
-        type: String,
-        unique: true,
-    }
+  name: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
+  icon: {
+    type: String,
+  },
+  baner: {
+    type: String,
+  },
 });
 
 export default mongoose.model("Categories", categorySchema);
