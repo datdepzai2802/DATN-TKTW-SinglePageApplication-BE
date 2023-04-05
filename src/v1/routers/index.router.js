@@ -9,6 +9,7 @@ import routerPuslishing from "./publishing/publishing.router";
 import routerAuthor from "./author/author.router";
 import routerSupplier from "./supplieres/supplieres.router";
 import routerVoucher from "./voucher/voucher.router";
+import routerBlog from "./blog/blog.router";
 
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.use("", routerProduct);
 router.use("", routerCategory);
 router.use("", routerSupplier);
 router.use("", routerVoucher);
+router.use("", routerBlog);
 
 export default router;

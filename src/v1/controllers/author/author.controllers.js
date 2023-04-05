@@ -1,40 +1,50 @@
-import Author from "../../models/author.model";
+import _Author from "../../models/author.model";
 export const list = async (req, res) => {
   try {
-    const data = await Author.find();
-
-    res.json(data);
+    const data = await _Author.find();
+    return res.json({
+      succsessCode: 200,
+      data: data,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not data",
+    return res.json({
+      errorCode: 400,
+      message: "Email is not valid",
     });
   }
 };
 export const read = async (req, res) => {
   const filter = { _id: req.params.id };
-  const author = req.query["_expand"];
   try {
-    const author = await Author.findOne(filter)
-      .select("-__v")
-      .populate(populate)
-      .exec();
-    console.log("publishing", author);
-    res.json(author);
+    const author = await _Author.findOne(filter).exec();
+    if (!author) {
+      return res.json({
+        errorCode: 404,
+        message: "Author is not valid",
+      });
+    }
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      message: "Error: not data",
-      error,
+    return res.json({
+      errorCode: 400,
+      message: "Can't find author",
     });
   }
 };
 export const add = async (req, res) => {
   try {
-    const author = await Author(req.body).save();
-    return res.json(author);
-    console.log("author", author);
+    const author = await _Author(req.body).save();
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not create data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't add author",
     });
   }
 };
@@ -42,28 +52,36 @@ export const add = async (req, res) => {
 export const remove = async (req, res) => {
   try {
     const id = req.params.id;
-    const author = await Author.findOneAndDelete({ _id: id }).exec();
-    res.json(author);
+    const author = await _Author.findOneAndDelete({ _id: id }).exec();
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not remove data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't delete author",
     });
   }
 };
 
 export const update = async (req, res) => {
   try {
-    const author = await Author.findOneAndUpdate(
+    const author = await _Author.findOneAndUpdate(
       { _id: req.params.id },
       req.body,
       {
         new: true,
       }
     );
-    res.json(author);
+    return res.json({
+      succsessCode: 200,
+      data: author,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not update data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't update author",
     });
   }
 };

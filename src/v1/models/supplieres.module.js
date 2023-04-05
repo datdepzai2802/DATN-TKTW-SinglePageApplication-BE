@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 const supplieresSchema = mongoose.Schema({
-  id: {
-    type: String,
-  },
   name: {
     type: String,
   },
@@ -16,4 +13,5 @@ const supplieresSchema = mongoose.Schema({
     type: string,
   },
 });
-export default mongoose.model("supplieres", supplieresSchema);
+
+export default mongoose.model("Supplieres", supplieresSchema);

@@ -10,9 +10,10 @@ const categorySchema = mongoose.Schema({
   icon: {
     type: String,
   },
-  baner: {
+  banner: {
     type: String,
   },
 });
 
-export default mongoose.model("Categories", categorySchema);
+
+export default mongoose.model("Category", categorySchema);

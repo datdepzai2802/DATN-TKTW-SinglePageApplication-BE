@@ -1,19 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 const blogSchema = mongoose.Schema({
   title: {
-    type: string,
+    type: String,
   },
   html: {
-    type: string,
+    type: String,
   },
   isHidden: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   userId: {
     type: ObjectId,
-    ref: "user",
+    ref: "User",
   },
 });
 

@@ -1,68 +1,86 @@
-import Formbook from "../../models/formbook.model";
+import _Formbook from "../../models/formbook.model";
 export const list = async (req, res) => {
   try {
-    const data = await Formbook.find();
-    res.json(data);
+    const data = await _Formbook.find();
+    return res.json({
+      succsessCode: 200,
+      data: data,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't list formbook",
     });
   }
 };
 export const read = async (req, res) => {
   const filter = { _id: req.params.id };
-  const populate = req.query["_expand"];
   try {
-    const formbook = await Formbook.findOne(filter)
-      .select("-__v")
-      .populate(populate)
-      .exec();
-    console.log("formbook", formbook);
-    res.json(formbook);
+    const formbook = await _Formbook.findOne(filter).exec();
+    if (!formbook) {
+      return res.json({
+        errorCode: 404,
+        message: "Formbook is not valid",
+      });
+    }
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      message: "Error: not data",
-      error,
+    return res.json({
+      errorCode: 400,
+      message: "Can't find formbook",
     });
   }
 };
 export const add = async (req, res) => {
   try {
-    console.log("formbook", req.body);
-    const formbook = await Formbook(req.body).save();
-    return res.json(formbook);
+    const formbook = await _Formbook(req.body).save();
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not create data",
-      error,
+    return res.json({
+      errorCode: 400,
+      message: "Can't add formbook",
     });
   }
 };
 export const remove = async (req, res) => {
   try {
     const id = req.params.id;
-    const formbook = await Formbook.findOneAndDelete({ _id: id }).exec();
-    res.json(formbook);
+    const formbook = await _Formbook.findOneAndDelete({ _id: id }).exec();
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not remove data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't delete formbook",
     });
   }
 };
 
 export const update = async (req, res) => {
   try {
-    const formbook = await Formbook.findOneAndUpdate(
+    const formbook = await _Formbook.findOneAndUpdate(
       { _id: req.params.id },
       req.body,
       {
         new: true,
       }
     );
-    res.json(formbook);
+    return res.json({
+      succsessCode: 200,
+      data: formbook,
+    });
   } catch (error) {
-    res.status(400).json({
-      error: "Error: not update data",
+    return res.json({
+      errorCode: 400,
+      message: "Can't update formbook",
     });
   }
 };
