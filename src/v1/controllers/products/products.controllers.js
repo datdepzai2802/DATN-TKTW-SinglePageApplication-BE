@@ -52,18 +52,21 @@ export const readProduct = async (req, res) => {
 export const addProduct = async (req, res) => {
   try {
     console.log("req", req.body);
-
     const productOld = await _Product.find({ name: req.body.name });
-    if (productOld) {
-      return errorFNC("product unique");
+    console.log(productOld);
+    if (!productOld) {
+      return res.json({
+        message: "Product already exists",
+        errorCode: 401,
+      });
     }
     const product = new _Product(req.body);
     const result = await _Product(product).save();
     if (result) {
-       return res.json({
-          errorCode: 200,
-          data: result,
-       });
+      return res.json({
+        successCode: 200,
+        data: result,
+      });
     }
   } catch (error) {
     return res.json({
