@@ -4,13 +4,13 @@ const supplieresSchema = mongoose.Schema({
     type: String,
   },
   phone: {
-    type: string,
+    type: String,
   },
   email: {
-    type: string,
+    type: String,
   },
   address: {
-    type: string,
+    type: String,
   },
 });
 
