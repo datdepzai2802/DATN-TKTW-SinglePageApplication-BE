@@ -60,7 +60,10 @@ export const addProduct = async (req, res) => {
     const product = new _Product(req.body);
     const result = await _Product(product).save();
     if (result) {
-      return res.status(200).json(result);
+       return res.json({
+          errorCode: 200,
+          data: result,
+       });
     }
   } catch (error) {
     return res.json({
@@ -74,7 +77,7 @@ export const removeProduct = async (req, res) => {
     const id = req.params.id;
     const product = await _Product.findOneAndDelete({ _id: id }).exec();
     return res.json({
-      errorCode: 200,
+      successCode: 200,
       data: product,
     });
   } catch (error) {
@@ -95,7 +98,7 @@ export const updateProduct = async (req, res) => {
       }
     );
     return res.json({
-      errorCode: 200,
+      successCode: 200,
       data: product,
     });
   } catch (error) {
