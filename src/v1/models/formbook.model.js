@@ -6,4 +6,4 @@ const formbookSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model("Formbook", formbookSchema);
+export default mongoose.model("formbooks", formbookSchema);

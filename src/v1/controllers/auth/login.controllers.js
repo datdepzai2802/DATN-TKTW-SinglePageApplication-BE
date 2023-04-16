@@ -69,7 +69,7 @@ const login = async (req, res, next) => {
     }
   } catch (error) {
     return res.json({
-      successCode: 400,
+      errorCode: 400,
       message: error,
     });
   }
@@ -81,7 +81,8 @@ export const requestRefreshToken = async (req, res) => {
     const refreshToken = req.cookies["refreshToken"];
     console.log("refreshToken", refreshToken);
     if (!refreshToken)
-      return res.status(401).json({
+      return res.json({
+        errorCode: 401,
         message: "you are not authenticated !",
       });
 
@@ -102,12 +103,18 @@ export const requestRefreshToken = async (req, res) => {
           path: "/",
           sameSite: "strict",
         });
-
+        // return res.json({
+        //   successCode: 200,
+        //   token: newToken
+        // });
         return res.status(200).json({ token: newToken });
       }
     );
   } catch (error) {
-    console.log(error);
+    return res.json({
+      errorCode: 200,
+      message: error,
+    });
   }
 };
 

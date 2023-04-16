@@ -1,13 +1,23 @@
 import _Product from "../../models/product.model";
-import _Category from "../../models/categories.model";
+import _Supplieres from "../../models/supplieres.module";
 import _Author from "../../models/author.model";
 import _Publishing from "../../models/publishing.model";
-import _Supplieres from "../../models/supplieres.module";
 import _Formbook from "../../models/formbook.model";
+import diacritics from "diacritics";
 
 export const listProduct = async (req, res) => {
   try {
-    const data = await _Product.find();
+    console.log("get product");
+    const data = await _Product
+      .find()
+      .populate({ path: "categories", select: "name" })
+      .populate({ path: "supplieres", select: "name" })
+      .populate({ path: "publishings", select: "name" })
+      .populate({ path: "authors", select: "name" })
+      .populate({ path: "formbooks", select: "name" })
+      .exec();
+    // console.log("data", data);
+
     return res.json({
       successCode: 200,
       data: data,
@@ -17,30 +27,22 @@ export const listProduct = async (req, res) => {
       message: "Không tìm thấy sản phẩm",
       errorCode: 400,
     });
+    // console.log(error);
   }
 };
 export const readProduct = async (req, res) => {
   try {
-    const product = await _Product.findOne({ _id: req.params.id }).exec();
-    const { categorieId, publishingHousId, formBookId, authorId } = product;
-    const categorie = await _Category.findOne({ _id: categorieId }).exec();
-    const publishingHous = await _Publishing
-      .findOne({ _id: publishingHousId })
+    const product = await _Product
+      .findOne({ _id: req.params.id })
+      .populate({ path: "categories", select: "name" })
+      .populate({ path: "supplieres", select: "name" })
+      .populate({ path: "publishings", select: "name" })
+      .populate({ path: "authors", select: "name" })
+      .populate({ path: "formbooks", select: "name" })
       .exec();
-    const formBook = await _Formbook.findOne({ _id: formBookId }).exec();
-    const author = await _Author.findOne({ _id: authorId }).exec();
-    const supplieres = await _Supplieres.findOne({ _id: supplieresId }).exec();
-    const productFind = {
-      ...product,
-      categorieId: categorie,
-      publishingHousId: publishingHous,
-      formBookId: formBook,
-      authorId: author,
-      supplieresId: supplieres,
-    };
     return res.json({
       successCode: 200,
-      data: productFind,
+      data: product,
     });
   } catch (error) {
     return res.json({
@@ -109,5 +111,74 @@ export const updateProduct = async (req, res) => {
       message: "Can't update products",
       errorCode: 400,
     });
+  }
+};
+
+export const productSearch = async (req, res) => {
+  try {
+    // const genreSupplieres = [];
+    // const genreAuthor = [];
+    // const genrePublishing = [];
+    // const genreFormbook = [];
+    // const supplieres = await _Supplieres.find().select("name");
+    // supplieres.forEach((item) => genreSupplieres.push(item.name));
+    // const authors = await _Author.find().select("name");
+    // authors.forEach((item) => genreAuthor.push(item.name));
+    // const publishings = await _Publishing.find().select("name");
+    // publishings.forEach((item) => genrePublishing.push(item.name));
+    // const formbooks = await _Formbook.find().select("name");
+    // formbooks.forEach((item) => genreFormbook.push(item.name));
+    let objSearch = {};
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+    const price = req.query.price || 1;
+    // let valueSupplieres = req.query.genreSupplieres || "all";
+    // let valueAuthor = req.query.genreAuthor || "all";
+    // let valuePublishing = req.query.genrePublishing || "all";
+    // let valueFormbooks = req.query.formbooks || "all";
+    // valueSupplieres === "all"
+    //   ? (valueSupplieres = [...genreSupplieres])
+    //   : (valueSupplieres = req.query.genreSupplieres.split(","));
+    // valueAuthor === "all"
+    //   ? (valueAuthor = [...genreSupplieres])
+    //   : (valueAuthor = req.query.genreSupplieres.split(","));
+    // valuePublishing === "all"
+    //   ? (valuePublishing = [...genreSupplieres])
+    //   : (valuePublishing = req.query.valuePublishing.split(","));
+    // valueFormbooks === "all"
+    //   ? (valueFormbooks = [...genreFormbook])
+    //   : (valuevalueFormbooks = req.query.valueFormbooks.split(","));
+    if (search !== "")
+      objSearch.name = { $regex: new RegExp(diacritics.remove(search), "iu") };
+    // if (price !== "") objSearch.price = new RegExp(search, "i");
+    console.log(objSearch);
+    const product = await _Product.find(objSearch);
+    // .skip(page * limit)
+    // .limit(limit);
+    // .select("name")
+    // .where("supplieres", "publishings", "authors", "formbooks")
+    // .in([...valueSupplieres])
+    // .in([...valueFormbooks])
+    // .in([...valuePublishing])
+    // .in([...valueAuthor])
+    console.log(`Found ${product.length} matching products`);
+    console.log(product);
+    const response = {
+      page: page + 1,
+      limit,
+      data: product,
+    };
+
+    return res.json({
+      successCode: 201,
+      data: response,
+    });
+  } catch (error) {
+    // return res.json({
+    //   message: "Can't update products",
+    //   errorCode: 400,
+    // });
+    console.log(error);
   }
 };

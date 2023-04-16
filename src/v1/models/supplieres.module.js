@@ -14,4 +14,4 @@ const supplieresSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model("Supplieres", supplieresSchema);
+export default mongoose.model("supplieres", supplieresSchema);

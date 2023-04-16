@@ -17,7 +17,7 @@ const corsOptinon = {
 // app.use(cors(corsOptinon));
 app.use(cors());
 app.use(express.json());
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
