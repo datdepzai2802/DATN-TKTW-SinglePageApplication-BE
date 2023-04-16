@@ -9,7 +9,7 @@ export const register = async (req, res) => {
       email,
     });
     return res.json({
-      code,
+      code, 
       message,
       element,
     });

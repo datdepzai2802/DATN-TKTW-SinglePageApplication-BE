@@ -1,6 +1,6 @@
-import mongoose, { ObjectId } from "mongoose";
-
-const productSchema = mongoose.Schema({
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+const productSchema = Schema({
   view: {
     type: Number,
   },
@@ -16,14 +16,14 @@ const productSchema = mongoose.Schema({
   purchases: {
     type: String,
   },
-  images: {
+  productImage: {
+    type: Array,
+  },
+  previewImage: {
     type: Array,
   },
   sale: {
     type: Number,
-  },
-  categories_id: {
-    type: String,
   },
   quantity: {
     type: Number,
@@ -31,17 +31,25 @@ const productSchema = mongoose.Schema({
   isHidden: {
     type: Boolean,
   },
-  publishing_hous_id: {
-    type: ObjectId,
-    ref: "Publishing",
+  formbooks: {
+    type: Schema.Types.ObjectId,
+    ref: "formbooks",
   },
-  form_book_id: {
-    type: ObjectId,
-    ref: "Formbook",
+  categories: {
+    type: Schema.Types.ObjectId,
+    ref: "categories",
   },
-  author_id: {
-    type: ObjectId,
-    ref: "Author",
+  publishings: {
+    type: Schema.Types.ObjectId,
+    ref: "publishings",
+  },
+  authors: {
+    type: Schema.Types.ObjectId,
+    ref: "authors",
+  },
+  supplieres: {
+    type: Schema.Types.ObjectId,
+    ref: "supplieres",
   },
 });
 export default mongoose.model("Product", productSchema);
