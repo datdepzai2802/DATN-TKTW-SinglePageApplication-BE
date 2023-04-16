@@ -17,6 +17,7 @@ export const listProduct = async (req, res) => {
       .populate({ path: "formbooks", select: "name" })
       .exec();
     // console.log("data", data);
+
     return res.json({
       successCode: 200,
       data: data,
