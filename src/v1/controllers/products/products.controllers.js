@@ -3,7 +3,6 @@ import _Supplieres from "../../models/supplieres.module";
 import _Author from "../../models/author.model";
 import _Publishing from "../../models/publishing.model";
 import _Formbook from "../../models/formbook.model";
-import diacritics from "diacritics";
 
 export const listProduct = async (req, res) => {
   try {
