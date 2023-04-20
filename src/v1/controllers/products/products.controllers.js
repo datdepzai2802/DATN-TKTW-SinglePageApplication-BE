@@ -113,3 +113,74 @@ export const updateProduct = async (req, res) => {
   }
 };
 
+
+export const productSearch = async (req, res) => {
+  try {
+    // const genreSupplieres = [];
+    // const genreAuthor = [];
+    // const genrePublishing = [];
+    // const genreFormbook = [];
+    // const supplieres = await _Supplieres.find().select("name");
+    // supplieres.forEach((item) => genreSupplieres.push(item.name));
+    // const authors = await _Author.find().select("name");
+    // authors.forEach((item) => genreAuthor.push(item.name));
+    // const publishings = await _Publishing.find().select("name");
+    // publishings.forEach((item) => genrePublishing.push(item.name));
+    // const formbooks = await _Formbook.find().select("name");
+    // formbooks.forEach((item) => genreFormbook.push(item.name));
+    let objSearch = {};
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+    const price = req.query.price || 1;
+    // let valueSupplieres = req.query.genreSupplieres || "all";
+    // let valueAuthor = req.query.genreAuthor || "all";
+    // let valuePublishing = req.query.genrePublishing || "all";
+    // let valueFormbooks = req.query.formbooks || "all";
+    // valueSupplieres === "all"
+    //   ? (valueSupplieres = [...genreSupplieres])
+    //   : (valueSupplieres = req.query.genreSupplieres.split(","));
+    // valueAuthor === "all"
+    //   ? (valueAuthor = [...genreSupplieres])
+    //   : (valueAuthor = req.query.genreSupplieres.split(","));
+    // valuePublishing === "all"
+    //   ? (valuePublishing = [...genreSupplieres])
+    //   : (valuePublishing = req.query.valuePublishing.split(","));
+    // valueFormbooks === "all"
+    //   ? (valueFormbooks = [...genreFormbook])
+    //   : (valuevalueFormbooks = req.query.valueFormbooks.split(","));
+    if (search !== "") {
+      const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Thoát các ký tự đặc biệt trong chuỗi tìm kiếm
+      objSearch.name = { $regex: new RegExp(escapedSearch, "iu") }; // Tìm kiếm sản phẩm với tên không có dấu
+    }
+    // if (price !== "") objSearch.price = new RegExp(search, "i");
+    // .skip(page * limit)
+    // .limit(limit);
+    // .select("name")
+    // .where("supplieres", "publishings", "authors", "formbooks")
+    // .in([...valueSupplieres])
+    // .in([...valueFormbooks])
+    // .in([...valuePublishing])
+    // .in([...valueAuthor])
+    console.log(objSearch);
+    const product = await _Product.find(objSearch);
+    console.log(`Found ${product.length} matching products`);
+    console.log("search", search);
+    const response = {
+      page: page + 1,
+      limit,
+      data: product,
+    };
+
+    return res.json({
+      successCode: 201,
+      data: response,
+    });
+  } catch (error) {
+    // return res.json({
+    //   message: "Can't update products",
+    //   errorCode: 400,
+    // });
+    console.log(error);
+  }
+};
