@@ -13,4 +13,4 @@ const publishingSchema = mongoose.Schema({
     type: String,
   },
 });
-export default mongoose.model("Publishing", publishingSchema);
+export default mongoose.model("publishings", publishingSchema);

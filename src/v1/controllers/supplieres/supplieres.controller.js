@@ -1,4 +1,4 @@
-import _Supplieres from "../../models/product.model";
+import _Supplieres from "../../models/supplieres.module";
 export const listSupplieres = async (req, res) => {
   try {
     const data = await _Supplieres.find();

@@ -2,10 +2,10 @@ import mongoose, { ObjectId } from "mongoose";
 
 const commentSchema = mongoose.Schema({
   title: {
-    type: string,
+    type: String,
   },
   content: {
-    type: string,
+    type: String,
   },
   isHidden: {
     type: Boolean,

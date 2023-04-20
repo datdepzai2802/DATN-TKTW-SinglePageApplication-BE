@@ -113,6 +113,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
+
 export const productSearch = async (req, res) => {
   try {
     // const genreSupplieres = [];

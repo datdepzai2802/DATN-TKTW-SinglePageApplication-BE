@@ -4,13 +4,14 @@ const supplieresSchema = mongoose.Schema({
     type: String,
   },
   phone: {
-    type: string,
+    type: String,
   },
   email: {
-    type: string,
+    type: String,
   },
   address: {
-    type: string,
+    type: String,
   },
 });
-export default mongoose.model("Supplieres", supplieresSchema);
+
+export default mongoose.model("supplieres", supplieresSchema);
