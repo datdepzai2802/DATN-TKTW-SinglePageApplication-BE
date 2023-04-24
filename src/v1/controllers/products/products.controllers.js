@@ -119,7 +119,7 @@ export const productSearch = async (req, res) => {
     const page = parseInt(req.query.page) - 1 || 0;
     const limit = parseInt(req.query.limit) || 5;
     const search = req.query.search || "";
-    const price = req.query.price;
+    const price = req.query.price || "0";
     let author = [];
     let formbook = [];
     let supplieres = [];
@@ -150,7 +150,8 @@ export const productSearch = async (req, res) => {
     if (querySupplieresId && querySupplieresId !== "All") {
       objSearch.supplieres = querySupplieresId;
     }
-
+    
+    console.log("price:", typeof price);
     if (price !== undefined) {
       const priceRegex = /^[0-9]+(,[0-9]+)*$/;
       if (!priceRegex.test(price)) {
