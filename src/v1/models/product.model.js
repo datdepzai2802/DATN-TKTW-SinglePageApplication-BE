@@ -4,14 +4,17 @@ const productSchema = Schema({
   view: {
     type: Number,
   },
-  description: {
+  descriptionShort: {
+    type: String,
+  },
+  descriptionLong: {
     type: String,
   },
   name: {
     type: String,
   },
   price: {
-    type: Number,
+    type: String,
   },
   purchases: {
     type: String,
@@ -23,7 +26,7 @@ const productSchema = Schema({
     type: Array,
   },
   sale: {
-    type: Number,
+    type: String,
   },
   quantity: {
     type: Number,
@@ -31,24 +34,27 @@ const productSchema = Schema({
   isHidden: {
     type: Boolean,
   },
+  other: {
+    type: Array,
+  },
   formbooks: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: "formbooks",
   },
   categories: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: "categories",
   },
   publishings: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: "publishings",
   },
   authors: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: "authors",
   },
   supplieres: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: "supplieres",
   },
 });
