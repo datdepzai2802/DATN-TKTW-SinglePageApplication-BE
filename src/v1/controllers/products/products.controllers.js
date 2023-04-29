@@ -9,11 +9,11 @@ export const listProduct = async (req, res) => {
     console.log("get product");
     const data = await _Product
       .find()
-      .populate({ path: "categories", select: "name" })
-      .populate({ path: "supplieres", select: "name" })
-      .populate({ path: "publishings", select: "name" })
-      .populate({ path: "authors", select: "name" })
-      .populate({ path: "formbooks", select: "name" })
+      .populate({ path: "categories" })
+      .populate({ path: "supplieres" })
+      .populate({ path: "publishings" })
+      .populate({ path: "authors" })
+      .populate({ path: "formbooks" })
       .exec();
     // console.log("data", data);
 
@@ -33,11 +33,11 @@ export const readProduct = async (req, res) => {
   try {
     const product = await _Product
       .findOne({ _id: req.params.id })
-      .populate({ path: "categories", select: "name" })
-      .populate({ path: "supplieres", select: "name" })
-      .populate({ path: "publishings", select: "name" })
-      .populate({ path: "authors", select: "name" })
-      .populate({ path: "formbooks", select: "name" })
+      .populate({ path: "categories" })
+      .populate({ path: "supplieres" })
+      .populate({ path: "publishings" })
+      .populate({ path: "authors" })
+      .populate({ path: "formbooks" })
       .exec();
     return res.json({
       successCode: 200,
@@ -188,6 +188,36 @@ export const productSearch = async (req, res) => {
     //   message: "Can't update products",
     //   errorCode: 400,
     // });
+    console.log(error);
+  }
+};
+
+export const productSearchs = async (req, res) => {
+  try {
+    let objSearch = {};
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.search || "";
+    const price = req.query.price || 1;
+    if (search !== "") {
+      const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Thoát các ký tự đặc biệt trong chuỗi tìm kiếm
+      objSearch.name = { $regex: new RegExp(escapedSearch, "iu") }; // Tìm kiếm sản phẩm với tên không có dấu
+    }
+    console.log(objSearch);
+    const product = await _Product.find(objSearch);
+    console.log(`Found ${product.length} matching products`);
+    console.log("search", search);
+    const response = {
+      page: page + 1,
+      limit,
+      data: product,
+    };
+
+    return res.json({
+      successCode: 201,
+      data: response,
+    });
+  } catch (error) {
     console.log(error);
   }
 };
