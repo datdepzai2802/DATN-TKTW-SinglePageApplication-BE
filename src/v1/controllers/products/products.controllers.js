@@ -3,7 +3,6 @@ import _Supplieres from "../../models/supplieres.module";
 import _Author from "../../models/author.model";
 import _Publishing from "../../models/publishing.model";
 import _Formbook from "../../models/formbook.model";
-import diacritics from "diacritics";
 
 export const listProduct = async (req, res) => {
   try {
@@ -116,55 +115,64 @@ export const updateProduct = async (req, res) => {
 
 export const productSearch = async (req, res) => {
   try {
-    // const genreSupplieres = [];
-    // const genreAuthor = [];
-    // const genrePublishing = [];
-    // const genreFormbook = [];
-    // const supplieres = await _Supplieres.find().select("name");
-    // supplieres.forEach((item) => genreSupplieres.push(item.name));
-    // const authors = await _Author.find().select("name");
-    // authors.forEach((item) => genreAuthor.push(item.name));
-    // const publishings = await _Publishing.find().select("name");
-    // publishings.forEach((item) => genrePublishing.push(item.name));
-    // const formbooks = await _Formbook.find().select("name");
-    // formbooks.forEach((item) => genreFormbook.push(item.name));
     let objSearch = {};
     const page = parseInt(req.query.page) - 1 || 0;
     const limit = parseInt(req.query.limit) || 5;
     const search = req.query.search || "";
-    const price = req.query.price || 1;
-    // let valueSupplieres = req.query.genreSupplieres || "all";
-    // let valueAuthor = req.query.genreAuthor || "all";
-    // let valuePublishing = req.query.genrePublishing || "all";
-    // let valueFormbooks = req.query.formbooks || "all";
-    // valueSupplieres === "all"
-    //   ? (valueSupplieres = [...genreSupplieres])
-    //   : (valueSupplieres = req.query.genreSupplieres.split(","));
-    // valueAuthor === "all"
-    //   ? (valueAuthor = [...genreSupplieres])
-    //   : (valueAuthor = req.query.genreSupplieres.split(","));
-    // valuePublishing === "all"
-    //   ? (valuePublishing = [...genreSupplieres])
-    //   : (valuePublishing = req.query.valuePublishing.split(","));
-    // valueFormbooks === "all"
-    //   ? (valueFormbooks = [...genreFormbook])
-    //   : (valuevalueFormbooks = req.query.valueFormbooks.split(","));
-    if (search !== "") {
-      objSearch.name = { $regex: new RegExp(diacritics.remove(search), "iu") };
+    const price = req.query.price || "0";
+    let author = [];
+    let formbook = [];
+    let supplieres = [];
+    const queryAuthorId = req.query.authors;
+    const querySupplieresId = req.query.supplieres;
+    const queryFormbooks = req.query.formbooks || null;
+
+    const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    objSearch.name = { $regex: new RegExp(escapedSearch, "iu") };
+
+    // tìm kiếm tác giả
+    if (!queryAuthorId || queryAuthorId === "All") {
+      const listAuthor = await _Author.find().select("_id");
+      author = listAuthor.map((author) => author._id);
+    } else {
+      // Chỉ thêm giá trị của queryAuthorId vào objSearch nếu giá trị queryAuthorId tồn tại và khác "All"
+      if (queryAuthorId !== "All") {
+        objSearch.authors = queryAuthorId;
+      }
     }
-    // if (price !== "") objSearch.price = new RegExp(search, "i");
+
+    // Tìm kiếm hình thức sách
+    if (queryFormbooks !== null) {
+      objSearch.formbooks = queryFormbooks;
+    }
+
+    // Tìm kiếm nhà xuất bản
+    if (querySupplieresId && querySupplieresId !== "All") {
+      objSearch.supplieres = querySupplieresId;
+    }
+    
+    console.log("price:", typeof price);
+    if (price !== undefined) {
+      const priceRegex = /^[0-9]+(,[0-9]+)*$/;
+      if (!priceRegex.test(price)) {
+        return res.status(400).json({
+          errorCode: 400,
+          message: "Invalid price value",
+        });
+      }
+      const priceRange = price.split(",").map((p) => parseInt(p.trim()));
+      const minPrice = priceRange[0] || 0;
+      const maxPrice = priceRange[1] || Number.MAX_SAFE_INTEGER;
+      objSearch.price = { $gte: minPrice, $lte: maxPrice };
+    }
+
     console.log(objSearch);
-    const product = await _Product.find(objSearch);
-    // .skip(page * limit)
-    // .limit(limit);
-    // .select("name")
-    // .where("supplieres", "publishings", "authors", "formbooks")
-    // .in([...valueSupplieres])
-    // .in([...valueFormbooks])
-    // .in([...valuePublishing])
-    // .in([...valueAuthor])
+    const product = await _Product
+      .find(objSearch)
+      .skip(page * limit)
+      .limit(limit);
     console.log(`Found ${product.length} matching products`);
-    console.log(product);
+    console.log("search", search);
     const response = {
       page: page + 1,
       limit,
