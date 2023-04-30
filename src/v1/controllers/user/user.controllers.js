@@ -11,7 +11,7 @@ const User = {
         });
       }
       return res.json({
-        succsessCode: 200,
+        successCode: 200,
         data: users,
       });
     } catch (error) {
@@ -32,7 +32,7 @@ const User = {
         });
       }
       return res.json({
-        succsessCode: 200,
+        successCode: 200,
         data: user,
       });
     } catch (error) {
@@ -53,7 +53,7 @@ const User = {
         });
       }
       return res.json({
-        succsessCode: 200,
+        successCode: 200,
         data: rs,
       });
     } catch (error) {
@@ -74,7 +74,7 @@ const User = {
         });
       }
       return res.json({
-        succsessCode: 200,
+        successCode: 200,
         data: user,
       });
     } catch (error) {
@@ -98,7 +98,7 @@ const User = {
         });
       }
       return res.json({
-        succsessCode: 200,
+        successCode: 200,
         data: user,
       });
     } catch (error) {

@@ -3,7 +3,7 @@ export const listSupplieres = async (req, res) => {
   try {
     const data = await _Supplieres.find();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: data,
     });
   } catch (error) {
@@ -24,7 +24,7 @@ export const readSupplieres = async (req, res) => {
       });
     }
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: supplieres,
     });
   } catch (error) {
@@ -38,7 +38,7 @@ export const addSupplieres = async (req, res) => {
   try {
     const suppliery = await _Supplieres(req.body).save();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: suppliery,
     });
   } catch (error) {
@@ -53,7 +53,7 @@ export const removeSupplieres = async (req, res) => {
     const id = req.params.id;
     const suppliery = await _Supplieres.findOneAndDelete({ _id: id }).exec();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: suppliery,
     });
   } catch (error) {
@@ -74,7 +74,7 @@ export const updateSupplieres = async (req, res) => {
       }
     );
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: suppliery,
     });
   } catch (error) {
