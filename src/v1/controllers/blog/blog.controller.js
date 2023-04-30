@@ -4,7 +4,7 @@ export const listBlog = async (req, res) => {
   try {
     const blog = await _Blog.find();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: blog,
     });
   } catch (error) {
@@ -26,7 +26,7 @@ export const readBlog = async (req, res) => {
       });
     }
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: blog,
     });
   } catch (error) {
@@ -41,7 +41,7 @@ export const addBlog = async (req, res) => {
   try {
     const blog = await new _Blog(req.body).save();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: blog,
     });
   } catch (error) {
@@ -60,7 +60,7 @@ export const updateBlog = async (req, res) => {
       new: true,
     });
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: blog,
     });
   } catch (error) {
@@ -76,7 +76,7 @@ export const removeBlog = async (req, res) => {
     const id = req.params.id;
     const blog = await _Blog.findOneAndRemove({ _id: id });
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: blog,
     });
   } catch (error) {

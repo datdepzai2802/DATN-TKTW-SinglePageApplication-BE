@@ -3,7 +3,7 @@ export const list = async (req, res) => {
   try {
     const data = await _Voucher.find();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: data,
     });
   } catch (error) {
@@ -25,7 +25,7 @@ export const read = async (req, res) => {
       });
     }
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: voucher,
     });
   } catch (error) {
@@ -39,7 +39,7 @@ export const add = async (req, res) => {
   try {
     const voucher = await _Voucher(req.body).save();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: voucher,
     });
   } catch (error) {
@@ -54,7 +54,7 @@ export const remove = async (req, res) => {
     const id = req.params.id;
     const voucher = await _Voucher.findOneAndDelete({ _id: id }).exec();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: voucher,
     });
   } catch (error) {
@@ -75,7 +75,7 @@ export const update = async (req, res) => {
       }
     );
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: voucher,
     });
   } catch (error) {

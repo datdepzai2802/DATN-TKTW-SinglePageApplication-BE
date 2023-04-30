@@ -3,7 +3,7 @@ export const list = async (req, res) => {
   try {
     const data = await _Formbook.find();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: data,
     });
   } catch (error) {
@@ -24,7 +24,7 @@ export const read = async (req, res) => {
       });
     }
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: formbook,
     });
   } catch (error) {
@@ -38,7 +38,7 @@ export const add = async (req, res) => {
   try {
     const formbook = await _Formbook(req.body).save();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: formbook,
     });
   } catch (error) {
@@ -53,7 +53,7 @@ export const remove = async (req, res) => {
     const id = req.params.id;
     const formbook = await _Formbook.findOneAndDelete({ _id: id }).exec();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: formbook,
     });
   } catch (error) {
@@ -74,7 +74,7 @@ export const update = async (req, res) => {
       }
     );
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: formbook,
     });
   } catch (error) {

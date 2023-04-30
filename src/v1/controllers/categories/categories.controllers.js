@@ -4,7 +4,7 @@ export const listCategory = async (req, res) => {
   try {
     const category = await _Categories.find();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: category,
     });
   } catch (error) {
@@ -26,7 +26,7 @@ export const readCategory = async (req, res) => {
       });
     }
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: category,
     });
   } catch (error) {
@@ -41,7 +41,7 @@ export const addCategory = async (req, res) => {
   try {
     const category = await new _Categories(req.body).save();
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: category,
     });
   } catch (error) {
@@ -60,7 +60,7 @@ export const updateCategory = async (req, res) => {
       new: true,
     });
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: category,
     });
   } catch (error) {
@@ -76,7 +76,7 @@ export const removeCategory = async (req, res) => {
     const id = req.params.id;
     const category = await _Categories.findOneAndRemove({ _id: id });
     return res.json({
-      succsessCode: 200,
+      successCode: 200,
       data: category,
     });
   } catch (error) {
