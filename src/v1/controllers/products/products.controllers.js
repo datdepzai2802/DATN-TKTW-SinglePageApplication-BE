@@ -6,7 +6,6 @@ import _Formbook from "../../models/formbook.model";
 
 export const listProduct = async (req, res) => {
   try {
-    console.log("get product");
     const data = await _Product
       .find()
       .populate({ path: "categories" })
@@ -22,11 +21,11 @@ export const listProduct = async (req, res) => {
       data: data,
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       message: "Không tìm thấy sản phẩm",
       errorCode: 400,
     });
-    // console.log(error);
   }
 };
 export const readProduct = async (req, res) => {
@@ -52,9 +51,7 @@ export const readProduct = async (req, res) => {
 };
 export const addProduct = async (req, res) => {
   try {
-    console.log("req", req.body);
     const productOld = await _Product.find({ name: req.body.name });
-    console.log(productOld);
     if (!productOld) {
       return res.json({
         message: "Product already exists",
@@ -70,6 +67,7 @@ export const addProduct = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log("error", error);
     return res.json({
       message: "Can't add products",
       errorCode: 400,
@@ -150,7 +148,7 @@ export const productSearch = async (req, res) => {
     if (querySupplieresId && querySupplieresId !== "All") {
       objSearch.supplieres = querySupplieresId;
     }
-    
+
     console.log("price:", typeof price);
     if (price !== undefined) {
       const priceRegex = /^[0-9]+(,[0-9]+)*$/;

@@ -59,7 +59,7 @@ const createUser = async ({ email }) => {
       sendMailSevice({
         gmail: email,
         subject: "OTP Account shop books Niki",
-        text: `Chào mừng bạn đến với Niki, tài khoản:${gmail} password:${passwordUser}`,
+        text: `Chào mừng bạn đến với Niki, tài khoản:${email} password:${passwordUser}`,
         html: "",
       });
     }

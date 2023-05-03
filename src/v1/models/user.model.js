@@ -16,11 +16,13 @@ const userSchema = mongoose.Schema({
     minlength: 6,
   },
   avatar: {
-    type: String,
-    default: "https://i1.wp.com/i.imgur.com/a5rfZ9Q.jpg?resize=502%2C504&ssl=1",
+    type: Array,
+    default: [
+      "https://i1.wp.com/i.imgur.com/a5rfZ9Q.jpg?resize=502%2C504&ssl=1",
+    ],
   },
-  phoneNumber: {
-    type: Number,
+  phone: {
+    type: String,
   },
   isActive: {
     type: Boolean,

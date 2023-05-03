@@ -7,6 +7,9 @@ const cartSchema = mongoose.Schema({
   price: {
     type: String,
   },
+  sale: {
+    type: String,
+  },
   productImage: {
     type: Array,
   },
