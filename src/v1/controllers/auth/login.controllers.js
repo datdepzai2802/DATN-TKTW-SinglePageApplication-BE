@@ -42,7 +42,6 @@ const login = async (req, res, next) => {
     }
 
     if (user && validPassword) {
-      console.log("user", user);
       const userToken = {
         id: user.id,
         email: user.email,

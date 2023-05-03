@@ -5,12 +5,10 @@ const categorySchema = mongoose.Schema({
     type: String,
   },
   image: {
-    type: String,
+    type: Array,
+    default: [],
   },
   icon: {
-    type: String,
-  },
-  banner: {
     type: String,
   },
 });

@@ -4,7 +4,7 @@ const authorSchema = mongoose.Schema({
     type: String,
   },
   avatar: {
-    type: String,
+    type: Array,
   },
 });
 export default mongoose.model("authors", authorSchema);

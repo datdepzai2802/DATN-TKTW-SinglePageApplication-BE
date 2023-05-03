@@ -10,7 +10,7 @@ import routerAuthor from "./author/author.router";
 import routerSupplier from "./supplieres/supplieres.router";
 import routerVoucher from "./voucher/voucher.router";
 import routerBlog from "./blog/blog.router";
-
+import routerCart from "./cart/cart.router";
 
 const router = express.Router();
 
@@ -24,5 +24,6 @@ router.use("", routerCategory);
 router.use("", routerSupplier);
 router.use("", routerVoucher);
 router.use("", routerBlog);
+router.use("", routerCart);
 
 export default router;
