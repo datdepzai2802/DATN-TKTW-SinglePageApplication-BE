@@ -14,10 +14,10 @@ const productSchema = Schema({
     type: String,
   },
   price: {
-    type: String,
+    type: Number,
   },
   purchases: {
-    type: String,
+    type: Number,
   },
   productImage: {
     type: Array,
@@ -26,13 +26,14 @@ const productSchema = Schema({
     type: Array,
   },
   sale: {
-    type: String,
+    type: Number,
   },
   quantity: {
     type: Number,
   },
   isHidden: {
     type: Boolean,
+    default: false,
   },
   other: {
     type: Array,
