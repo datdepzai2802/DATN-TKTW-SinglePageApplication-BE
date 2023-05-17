@@ -37,12 +37,29 @@ export const read = async (req, res) => {
 };
 export const add = async (req, res) => {
   try {
-    const voucher = await _Voucher(req.body).save();
+    const { name } = req.body;
+    const exitVoucher = await _Voucher.find({ name });
+    if (!exitVoucher) {
+      return res.json({
+        successCode: 400,
+        message: "Voucher exit",
+      });
+    }
+    const voucher = new _Voucher(req.body);
+    const result = await _Voucher(voucher).save();
+    if (!result) {
+      return res.json({
+        successCode: 401,
+        message: "Add voucher false",
+      });
+    }
+    const data = await _Voucher.find();
     return res.json({
       successCode: 200,
-      data: voucher,
+      data,
     });
   } catch (error) {
+    console.log(error);
     return res.json({
       errorCode: 400,
       message: "Can't add voucher",
