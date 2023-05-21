@@ -1,7 +1,7 @@
 import express from "express";
-import auth from "./auth/index.router";
 
 import routerCategory from "./categories/categories.router";
+import auth from "./auth/index.router";
 import routerUser from "./user/user.router";
 import routerProduct from "./products/products.router";
 import routerFormbook from "./formbook/formbook.router";
@@ -13,8 +13,7 @@ import routerBlog from "./blog/blog.router";
 import routerCart from "./cart/cart.router";
 import infomationPageCart from "./infomationPage/infomationPage.router";
 import categoryInfomationPageCart from "./categoryInformationPage/categoryInformationPage.router";
-
-const router = express.Router();
+import reportComment from "./reportComment/reportComment.router";
 
 router.use("", auth);
 router.use("", routerUser);
@@ -29,5 +28,7 @@ router.use("", routerBlog);
 router.use("", routerCart);
 router.use("", infomationPageCart);
 router.use("", categoryInfomationPageCart);
+router.use("", routerComment);
+router.use("", reportComment);
 
 export default router;

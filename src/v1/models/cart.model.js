@@ -1,23 +1,25 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 
 const cartSchema = mongoose.Schema({
-  name: {
-    type: String,
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
   },
-  price: {
-    type: String,
-  },
-  sale: {
-    type: String,
-  },
-  productImage: {
-    type: Array,
+  selected: {
+    type: Boolean,
+    default: false,
   },
   quantity: {
-    type: String,
+    type: Number,
+    required: true,
+    default: 1,
+    min: 1,
   },
-  userId: {
-    type: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 

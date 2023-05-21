@@ -35,6 +35,7 @@ const User = {
         data: users,
       });
     } catch (error) {
+      console.log("error", error);
       return res.json({
         errorCode: 400,
         message: "Can't list user",

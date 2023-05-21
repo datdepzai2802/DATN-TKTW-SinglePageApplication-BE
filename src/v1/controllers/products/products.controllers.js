@@ -6,15 +6,31 @@ import _Formbook from "../../models/formbook.model";
 
 export const listProduct = async (req, res) => {
   try {
+    const isClientRequest = req.query.type === "client";
+    const isNewProductRequest = req.query.new === "true";
+    const isSaleProductRequest = req.query.sale === "true";
+
+    let filter = isClientRequest ? { isHidden: false } : {};
+
+    if (isNewProductRequest) {
+      const now = new Date();
+      const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      filter = { ...filter, createdAt: { $gte: oneWeekAgo } };
+    }
+
+    if (isSaleProductRequest) {
+      filter = { ...filter, discountPercent: { $gte: 10 } };
+    }
+
     const data = await _Product
-      .find()
+      .find(filter)
       .populate({ path: "categories" })
       .populate({ path: "supplieres" })
       .populate({ path: "publishings" })
       .populate({ path: "authors" })
       .populate({ path: "formbooks" })
+      .sort({ sale: -1 })
       .exec();
-    // console.log("data", data);
 
     return res.json({
       successCode: 200,
@@ -28,6 +44,28 @@ export const listProduct = async (req, res) => {
     });
   }
 };
+
+export const relatedProducts = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const currentProduct = await _Product.findById(productId);
+    const relatedProducts = await _Product.find({
+      categories: { $in: currentProduct.categories },
+      _id: { $ne: currentProduct._id },
+    });
+    return res.json({
+      successCode: 200,
+      data: relatedProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      message: "Không tìm thấy sản phẩm liên quan",
+      errorCode: 400,
+    });
+  }
+};
+
 export const readProduct = async (req, res) => {
   try {
     const product = await _Product
@@ -52,7 +90,9 @@ export const readProduct = async (req, res) => {
 export const addProduct = async (req, res) => {
   try {
     const productOld = await _Product.find({ name: req.body.name });
-    if (!productOld) {
+    console.log(123);
+    console.log("productOld", productOld);
+    if (productOld.length > 0) {
       return res.json({
         message: "Product already exists",
         errorCode: 401,
