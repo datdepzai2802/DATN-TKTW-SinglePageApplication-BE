@@ -45,6 +45,27 @@ export const listProduct = async (req, res) => {
   }
 };
 
+export const relatedProducts = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const currentProduct = await _Product.findById(productId);
+    const relatedProducts = await _Product.find({
+      categories: { $in: currentProduct.categories },
+      _id: { $ne: currentProduct._id },
+    });
+    return res.json({
+      successCode: 200,
+      data: relatedProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      message: "Không tìm thấy sản phẩm liên quan",
+      errorCode: 400,
+    });
+  }
+};
+
 export const readProduct = async (req, res) => {
   try {
     const product = await _Product

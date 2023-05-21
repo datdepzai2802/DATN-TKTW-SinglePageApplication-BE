@@ -11,7 +11,8 @@ export const list = async (req, res) => {
       })
       .populate({
         path: "product",
-      });
+      })
+      .sort({ createdAt: 1 });
 
     return res.json({
       successCode: 200,
@@ -37,7 +38,8 @@ export const read = async (req, res) => {
       .populate({
         path: "product",
         select: "name price sale productImage quantity",
-      });
+      })
+      .sort({ createdAt: -1 });
     console.log("data", data);
     return res.json({
       successCode: 200,
@@ -76,7 +78,8 @@ export const add = async (req, res) => {
       .populate({
         path: "product",
         select: "name price sale productImage quantity",
-      });
+      })
+      .sort({ createdAt: -1 });
     return res.json({
       successCode: 200,
       data: data,
@@ -141,7 +144,8 @@ export const update = async (req, res) => {
       .populate({
         path: "product",
         select: "name price sale productImage quantity",
-      });
+      })
+      .sort({ createdAt: -1 });
     return res.json({
       successCode: 200,
       data: data,
