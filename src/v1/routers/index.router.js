@@ -1,9 +1,9 @@
 import express from "express";
 
-import routerCategory from "./categories/categories.router";
 import auth from "./auth/index.router";
 import routerUser from "./user/user.router";
 import routerProduct from "./products/products.router";
+import routerCategory from "./categories/categories.router";
 import routerFormbook from "./formbook/formbook.router";
 import routerPuslishing from "./publishing/publishing.router";
 import routerAuthor from "./author/author.router";
@@ -14,6 +14,9 @@ import routerCart from "./cart/cart.router";
 import infomationPageCart from "./infomationPage/infomationPage.router";
 import categoryInfomationPageCart from "./categoryInformationPage/categoryInformationPage.router";
 import reportComment from "./reportComment/reportComment.router";
+import Comment from "./comment/comment.router";
+
+const router = express.Router();
 
 router.use("", auth);
 router.use("", routerUser);
@@ -28,7 +31,7 @@ router.use("", routerBlog);
 router.use("", routerCart);
 router.use("", infomationPageCart);
 router.use("", categoryInfomationPageCart);
-router.use("", routerComment);
 router.use("", reportComment);
+router.use("", Comment);
 
 export default router;
