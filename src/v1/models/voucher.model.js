@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 const voucherSchema = mongoose.Schema({
-  voucherId: {
-    type: String,
-    unique: true,
-  },
   name: {
     type: String,
   },

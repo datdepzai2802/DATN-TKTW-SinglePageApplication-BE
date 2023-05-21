@@ -1,7 +1,7 @@
 import express from "express";
-import auth from "./auth/index.router";
 
 import routerCategory from "./categories/categories.router";
+import auth from "./auth/index.router";
 import routerUser from "./user/user.router";
 import routerProduct from "./products/products.router";
 import routerFormbook from "./formbook/formbook.router";
@@ -11,6 +11,8 @@ import routerSupplier from "./supplieres/supplieres.router";
 import routerVoucher from "./voucher/voucher.router";
 import routerBlog from "./blog/blog.router";
 import routerCart from "./cart/cart.router";
+import routerComment from "./comment/comment.router";
+import reportComment from "./reportComment/reportComment.router";
 
 const router = express.Router();
 
@@ -25,5 +27,7 @@ router.use("", routerSupplier);
 router.use("", routerVoucher);
 router.use("", routerBlog);
 router.use("", routerCart);
+router.use("", routerComment);
+router.use("", reportComment);
 
 export default router;
