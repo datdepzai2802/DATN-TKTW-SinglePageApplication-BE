@@ -55,7 +55,6 @@ export const read = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-  try {
     const cartData = req.body;
     const product = cartData.product;
     const quantity = cartData.quantity;

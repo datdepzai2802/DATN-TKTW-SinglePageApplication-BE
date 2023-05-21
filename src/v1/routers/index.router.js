@@ -11,10 +11,9 @@ import routerSupplier from "./supplieres/supplieres.router";
 import routerVoucher from "./voucher/voucher.router";
 import routerBlog from "./blog/blog.router";
 import routerCart from "./cart/cart.router";
-import routerComment from "./comment/comment.router";
+import infomationPageCart from "./infomationPage/infomationPage.router";
+import categoryInfomationPageCart from "./categoryInformationPage/categoryInformationPage.router";
 import reportComment from "./reportComment/reportComment.router";
-
-const router = express.Router();
 
 router.use("", auth);
 router.use("", routerUser);
@@ -27,6 +26,8 @@ router.use("", routerSupplier);
 router.use("", routerVoucher);
 router.use("", routerBlog);
 router.use("", routerCart);
+router.use("", infomationPageCart);
+router.use("", categoryInfomationPageCart);
 router.use("", routerComment);
 router.use("", reportComment);
 
