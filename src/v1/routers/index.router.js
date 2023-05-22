@@ -16,6 +16,7 @@ import categoryInfomationPageCart from "./categoryInformationPage/categoryInform
 import reportComment from "./reportComment/reportComment.router";
 import Comment from "./comment/comment.router";
 import productSeries from "./product-series/product-series.router";
+import addressUser from "./addressUser/addressUsers.router";
 
 const router = express.Router();
 
@@ -35,5 +36,6 @@ router.use("", categoryInfomationPageCart);
 router.use("", reportComment);
 router.use("", Comment);
 router.use("", productSeries);
+router.use("", addressUser);
 
 export default router;
