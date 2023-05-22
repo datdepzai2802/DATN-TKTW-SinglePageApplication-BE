@@ -20,15 +20,9 @@ const userSchema = mongoose.Schema({
       "https://i1.wp.com/i.imgur.com/a5rfZ9Q.jpg?resize=502%2C504&ssl=1",
     ],
   },
-  phone: {
-    type: String,
-  },
   isActive: {
     type: Boolean,
     default: true,
-  },
-  address: {
-    type: String,
   },
   role: {
     type: Number,
