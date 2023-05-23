@@ -1,11 +1,19 @@
-import express from "express"
-import { add, list, read, remove, update } from "../../controllers/author/author.controllers"
+import express from "express";
+import {
+    add,
+    list,
+    read,
+    remove,
+    searchAuthor,
+    update,
+} from "../../controllers/author/author.controllers";
 
-const router = express.Router()
-router.get("/authors", list)
-router.get("/authors/:id", read)
-router.post("/authors", add)
-router.put("/authors/:id", update)
-router.delete("/authors/:id", remove)
+const router = express.Router();
+router.get("/authors", list);
+router.get("/authors/:id", read);
+router.post("/authors", add);
+router.put("/authors/:id", update);
+router.delete("/authors/:id", remove);
+router.get("/search-author", searchAuthor);
 
-export default router
+export default router;
