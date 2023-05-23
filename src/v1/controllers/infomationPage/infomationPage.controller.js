@@ -117,3 +117,33 @@ export const remove = async (req, res) => {
         });
     }
 };
+
+export const searchInfor = async (req, res) => {
+    try {
+        let objSearch = {};
+        const page = parseInt(req.query.page) - 1 || 0;
+        const limit = parseInt(req.query.limit) || 5;
+        const search = req.query.search || "";
+        const price = req.query.price || 1;
+        if (search !== "") {
+            const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Thoát các ký tự đặc biệt trong chuỗi tìm kiếm
+            objSearch.title = { $regex: new RegExp(escapedSearch, "iu") }; // Tìm kiếm sản phẩm với tên không có dấu
+        }
+        console.log(objSearch);
+        const information = await _infomationPage.find(objSearch);
+        console.log(`Found ${information.length} matching information`);
+        console.log("search", search);
+        const response = {
+            page: page + 1,
+            limit,
+            data: information,
+        };
+
+        return res.json({
+            successCode: 201,
+            data: response,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
