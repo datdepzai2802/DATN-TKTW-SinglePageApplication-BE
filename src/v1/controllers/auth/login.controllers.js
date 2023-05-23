@@ -25,21 +25,23 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await _User.findOne({ email }).exec();
+
     if (!user) {
-      return res.status(400).json({
-        message: "Email không tồn tại",
+      return res.json({
+        errorCode: 401,
+        message: "Incorrect account or password",
       });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(400).json({
-        message: "Sai mật khẩu",
+      return res.json({
+        errorCode: 401,
+        message: "Incorrect account or password",
       });
     }
 
     if (user && validPassword) {
-      console.log("user", user);
       const userToken = {
         id: user.id,
         email: user.email,
@@ -59,10 +61,16 @@ const login = async (req, res, next) => {
         token,
       };
       console.log("User", User);
-      return res.status(200).json(User);
+      return res.json({
+        successCode: 200,
+        data: User,
+      });
     }
   } catch (error) {
-    next(error);
+    return res.json({
+      errorCode: 400,
+      message: error,
+    });
   }
 };
 
@@ -72,7 +80,8 @@ export const requestRefreshToken = async (req, res) => {
     const refreshToken = req.cookies["refreshToken"];
     console.log("refreshToken", refreshToken);
     if (!refreshToken)
-      return res.status(401).json({
+      return res.json({
+        errorCode: 401,
         message: "you are not authenticated !",
       });
 
@@ -93,12 +102,18 @@ export const requestRefreshToken = async (req, res) => {
           path: "/",
           sameSite: "strict",
         });
-
+        // return res.json({
+        //   successCode: 200,
+        //   token: newToken
+        // });
         return res.status(200).json({ token: newToken });
       }
     );
   } catch (error) {
-    console.log(error);
+    return res.json({
+      errorCode: 200,
+      message: error,
+    });
   }
 };
 

@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
 const formbookSchema = mongoose.Schema({
-    name: {
-        type: String,
-        unique: true,
-    }
+  name: {
+    type: String,
+  },
 });
 
-export default mongoose.model("Formbook", formbookSchema);
+export default mongoose.model("formbooks", formbookSchema);

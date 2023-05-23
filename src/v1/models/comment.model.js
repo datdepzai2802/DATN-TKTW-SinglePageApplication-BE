@@ -1,32 +1,39 @@
-import { number } from "joi";
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const commentSchema = mongoose.Schema({
-  title: {
-    type: string,
+const commentSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
   content: {
-    type: string,
+    type: String,
+    required: true,
+  },
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+    required: true,
+  },
+  images: {
+    type: Array,
+    default: [],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
   isHidden: {
     type: Boolean,
-    default: true,
-  },
-  like: {
-    type: Number,
-  },
-  disLike: {
-    type: Number,
-    default: 0,
-  },
-  userId: {
-    type: ObjectId,
-    ref: "User",
-  },
-  blogId: {
-    type: ObjectId,
-    ref: "Blog",
+    default: false,
   },
 });
 
-export default mongoose.model("comment", commentSchema);
+module.exports = mongoose.model("Comment", commentSchema);

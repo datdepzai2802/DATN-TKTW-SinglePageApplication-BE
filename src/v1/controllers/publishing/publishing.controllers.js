@@ -1,63 +1,118 @@
-import Publishing from "../../models/publishing.model";
+import _Publishing from "../../models/publishing.model";
 export const list = async (req, res) => {
     try {
-        const data = await Publishing.find();
-
-        res.json(data);
+        const data = await _Publishing.find();
+        return res.json({
+            successCode: 200,
+            data: data,
+        });
     } catch (error) {
-        res.status(400).json({
-            error: "Error: not data",
-        })
+        return res.json({
+            errorCode: 400,
+            message: "Can't list publishing",
+        });
     }
-}
+};
 export const read = async (req, res) => {
     const filter = { _id: req.params.id };
-    const populate = req.query["_expand"];
     try {
-        const publishing = await Publishing.findOne(filter).select("-__v").populate(populate).exec();
-        console.log("publishing", publishing);
-        res.json(publishing);
+        const publishing = await _Publishing.findOne(filter).exec();
+        if (!publishing) {
+            return res.json({
+                errorCode: 404,
+                message: "Publishing is not valid",
+            });
+        }
+        return res.json({
+            successCode: 200,
+            data: publishing,
+        });
     } catch (error) {
-        res.status(400).json({
-            message: "Error: not data",
-            error,
-        })
+        return res.json({
+            errorCode: 400,
+            message: "Can't find publishing",
+        });
     }
-}
+};
 export const add = async (req, res) => {
     try {
-        console.log("product");
-        const publishing = await Publishing(req.body).save();
-        console.log("publishing");
-        return res.json(publishing);
-        console.log("publishing", publishing);
+        const publishing = await _Publishing(req.body).save();
+        return res.json({
+            successCode: 200,
+            data: publishing,
+        });
     } catch (error) {
-        res.status(400).json({
-            error: "Error: not create data",
-        })
+        return res.json({
+            errorCode: 400,
+            message: "Can't add publishing",
+        });
     }
-}
+};
 export const remove = async (req, res) => {
     try {
         const id = req.params.id;
-        const publishing = await Publishing.findOneAndDelete({ _id: id }).exec();
-        res.json(publishing);
+        const publishing = await _Publishing
+            .findOneAndDelete({ _id: id })
+            .exec();
+        return res.json({
+            successCode: 200,
+            data: publishing,
+        });
     } catch (error) {
-        res.status(400).json({
-            error: "Error: not remove data",
-        })
+        return res.json({
+            errorCode: 400,
+            message: "Can't delete publishing",
+        });
     }
-}
+};
 
 export const update = async (req, res) => {
     try {
-        const publishing = await Publishing.findOneAndUpdate({ _id: req.params.id }, req.body, {
-            new: true,
+        const publishing = await _Publishing.findOneAndUpdate(
+            { _id: req.params.id },
+            req.body,
+            {
+                new: true,
+            }
+        );
+        return res.json({
+            successCode: 200,
+            data: publishing,
         });
-        res.json(publishing);
     } catch (error) {
-        res.status(400).json({
-            error: "Error: not update data",
-        })
+        return res.json({
+            errorCode: 400,
+            message: "Can't update publishing",
+        });
     }
-}
+};
+
+export const searchPublish = async (req, res) => {
+    try {
+        let objSearch = {};
+        const page = parseInt(req.query.page) - 1 || 0;
+        const limit = parseInt(req.query.limit) || 5;
+        const search = req.query.search || "";
+        const price = req.query.price || 1;
+        if (search !== "") {
+            const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Thoát các ký tự đặc biệt trong chuỗi tìm kiếm
+            objSearch.name = { $regex: new RegExp(escapedSearch, "iu") }; // Tìm kiếm sản phẩm với tên không có dấu
+        }
+        console.log(objSearch);
+        const publishing = await _Publishing.find(objSearch);
+        console.log(`Found ${publishing.length} matching publishing`);
+        console.log("search", search);
+        const response = {
+            page: page + 1,
+            limit,
+            data: publishing,
+        };
+
+        return res.json({
+            successCode: 201,
+            data: response,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};

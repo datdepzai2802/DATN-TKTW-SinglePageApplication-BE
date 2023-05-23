@@ -1,21 +1,16 @@
-
 import mongoose from "mongoose";
 const publishingSchema = mongoose.Schema({
-    name: {
-        type: String,
-        unique: true,
-    },
-    phone: {
-        type: String,
-        unique: true,
-    },
-    email: {
-        type: String,
-        unique: true,
-    },
-    address: {
-        type: String,
-        unique: true,
-    }
-})
-export default mongoose.model("publishing", publishingSchema)
+  name: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+});
+export default mongoose.model("publishings", publishingSchema);
