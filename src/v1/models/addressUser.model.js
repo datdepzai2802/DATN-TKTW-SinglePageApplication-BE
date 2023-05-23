@@ -12,15 +12,24 @@ const addressUserSchema = mongoose.Schema({
     type: String,
   },
   selectedProvince: {
-    type: String,
+    type: Number,
   },
   selectedDistrict: {
-    type: String,
+    type: Number,
   },
   selectedWard: {
     type: String,
   },
   specificAddress: {
+    type: String,
+  },
+  districtName: {
+    type: String,
+  },
+  provinceName: {
+    type: String,
+  },
+  wardName: {
     type: String,
   },
   isActive: {
