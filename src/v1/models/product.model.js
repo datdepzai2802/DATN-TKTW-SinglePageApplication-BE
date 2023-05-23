@@ -58,5 +58,9 @@ const productSchema = Schema({
     type: [Schema.Types.ObjectId],
     ref: "supplieres",
   },
+  report: {
+    type: Schema.Types.ObjectId,
+    ref: "report"
+  },
 });
 export default mongoose.model("Product", productSchema);

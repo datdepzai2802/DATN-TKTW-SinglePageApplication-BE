@@ -59,3 +59,19 @@ export const isReportComment = async (req, res) => {
     return res.json({ success: false, message: "Internal server error" });
   }
 };
+
+export const removeRep = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const removeReport = await _ReportComment.findOneAndDelete({ _id: id }).exec();
+    return res.json({
+      successCode: 200,
+      data: removeReport,
+    });
+  } catch (error) {
+    return res.json({
+      errorCode: 400,
+      message: "Can't delete supplieres",
+    });
+  }
+};

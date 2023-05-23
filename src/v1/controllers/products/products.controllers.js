@@ -3,6 +3,8 @@ import _Supplieres from "../../models/supplieres.module";
 import _Author from "../../models/author.model";
 import _Publishing from "../../models/publishing.model";
 import _Formbook from "../../models/formbook.model";
+import _Comment from "../../models/comment.model";
+import _ReportComment from "../../models/reportComment.model";
 
 export const listProduct = async (req, res) => {
   try {
@@ -257,5 +259,98 @@ export const productSearchs = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const productWithComment = async (req, res) => {
+  try {
+    const isClientRequest = req.query.type === "client";
+    const isNewProductRequest = req.query.new === "true";
+    const isSaleProductRequest = req.query.sale === "true";
+
+    let filter = isClientRequest ? { isHidden: false } : {};
+
+    if (isNewProductRequest) {
+      const now = new Date();
+      const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      filter = { ...filter, createdAt: { $gte: oneWeekAgo } };
+    }
+
+    if (isSaleProductRequest) {
+      filter = { ...filter, discountPercent: { $gte: 10 } };
+    }
+      const data = await _Comment
+        .find()
+        .populate({ path: "user" })
+        .populate({ path: "product" })
+        .sort({ createdAt: -1 });
+    return res.json({
+      successCode: 200,
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      message: "Không tìm thấy bình luận",
+      errorCode: 400,
+    });
+  }
+};
+
+export const productWithReport = async (req, res) => {
+  try {
+    const isClientRequest = req.query.type === "client";
+    const isNewProductRequest = req.query.new === "true";
+    const isSaleProductRequest = req.query.sale === "true";
+
+    let filter = isClientRequest ? { isHidden: false } : {};
+
+    if (isNewProductRequest) {
+      const now = new Date();
+      const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      filter = { ...filter, createdAt: { $gte: oneWeekAgo } };
+    }
+
+    if (isSaleProductRequest) {
+      filter = { ...filter, discountPercent: { $gte: 10 } };
+    }
+      const data = await _Comment
+        .find()
+        .populate({ path: "user" })
+        .populate({ path: "product" })
+        .sort({ createdAt: -1 });
+        const reports = await Promise.all(
+          data.map(async (item) => {
+            if (item.product) {
+              const report = await _ReportComment.find({
+                product: item.product.id,
+              });
+              return report;
+            }
+            return null;
+          })
+        );
+        const result = []
+     for (const key in data) {
+      let item = {...data[key]}
+         if (data[key].product) {
+          item.product = {
+            ...item.product, 
+            reports: reports[key]
+          }
+         }
+         console.log('data', item.product);
+         result.push(item)
+     }
+    return res.json({
+      successCode: 200,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      message: "Không tìm thấy bình luận",
+      errorCode: 400,
+    });
   }
 };
